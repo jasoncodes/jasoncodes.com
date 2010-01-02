@@ -1,0 +1,63 @@
+@font-face
+{
+	font-family: HelveticaNeueLT-jasoncodes;
+	font-weight: 200;
+	src: url(../fonts/HelveticaNeueLT-jasoncodes.eot);
+}
+@font-face
+{
+	font-family: HelveticaNeueLT-jasoncodes;
+	font-weight: 200;
+	src: url(../fonts/HelveticaNeueLT-jasoncodes.ttf) format("truetype"), url(../fonts/HelveticaNeueLT-jasoncodes.eot) format("embedded-opentype");
+}
+body
+{
+	background: white;
+	color: black;
+	font-family: "Helvetica", "Arial", sans-serif;
+}
+body > header
+{
+	display: inline-block;
+	margin-bottom: 1em;
+}
+body > header > h1
+{
+	margin: 0;
+	font-family: "HelveticaNeueLT-jasoncodes", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	font-weight: normal;
+	font-weight: 200;
+	font-size: 3.5em;
+	text-transform: lowercase;
+	line-height: 0.95em;
+	letter-spacing: 0.08em;
+}
+body > header > h1 > span.space
+{
+	display: none;
+}
+body > header > h1 > span.codes
+{
+	color: #999;
+}
+body > header > h2
+{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	margin: 0;
+	font-weight: 300;
+	font-size: 1.05em;
+	color: #333;
+	letter-spacing: 0.25em;
+	text-transform: lowercase;
+	float: right;
+	border-top: 0.125em solid #ddd;
+	margin-right: 0.42em;
+	padding-left: 0em;
+	line-height: 1em;
+	white-space: nowrap;
+}
+body > header > h2 > span.period
+{
+	visibility: hidden;
+	margin: -0.4em;
+}

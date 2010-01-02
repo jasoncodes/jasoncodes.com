@@ -1,0 +1,16 @@
+RewriteEngine On
+
+# no-www
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^jasonweathered\.com$ [NC]
+RewriteRule ^(.*)$ http://jasoncodes.com/$1 [R=301,L]
+
+ExpiresActive On
+ExpiresByType text/html "access"
+
+AddType font/ttf ttf
+AddType font/otf otf
+AddType application/vnd.ms-fontobject eot
+AddType image/vnd.microsoft.icon ico
