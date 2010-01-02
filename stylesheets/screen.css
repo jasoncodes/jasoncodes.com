@@ -15,6 +15,7 @@ body
 	background: white;
 	color: black;
 	font-family: "Helvetica", "Arial", sans-serif;
+	margin: 8px 12px;
 }
 body > header
 {
