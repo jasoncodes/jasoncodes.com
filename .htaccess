@@ -14,3 +14,6 @@ AddType font/ttf ttf
 AddType font/otf otf
 AddType application/vnd.ms-fontobject eot
 AddType image/vnd.microsoft.icon ico
+
+Options +MultiViews
+DirectorySlash off
