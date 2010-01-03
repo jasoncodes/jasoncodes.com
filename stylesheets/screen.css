@@ -12,12 +12,19 @@ body
 	font-family: "Helvetica", "Arial", sans-serif;
 	margin: 8px 16px;
 }
-body > header
+
+body > header > hgroup
 {
 	display: inline-block;
 	margin-bottom: 1em;
+	font-weight: normal;
 }
-body > header > h1
+body > header > hgroup a
+{
+	color: inherit;
+	text-decoration: none;
+}
+body > header > hgroup h1
 {
 	margin: 0;
 	font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -30,15 +37,15 @@ body > header > h1
 	line-height: 0.95em;
 	letter-spacing: 0.08em;
 }
-body > header > h1 > span.space
+body > header > hgroup h1 span.space
 {
 	display: none;
 }
-body > header > h1 > span.codes
+body > header > hgroup h1 span.codes
 {
 	color: #999;
 }
-body > header > h2
+body > header > hgroup h2
 {
 	margin: 0;
 	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -54,7 +61,7 @@ body > header > h2
 	line-height: 1em;
 	white-space: nowrap;
 }
-body > header > h2 > span.period
+body > header > hgroup h2 span.period
 {
 	visibility: hidden;
 	margin: -0.4em;
