@@ -1,15 +1,10 @@
 @font-face
 {
-	font-family: HelveticaNeueLT-jasoncodes;
-	font-weight: 200;
-	src: url(../fonts/HelveticaNeueLT-jasoncodes.eot);
+	font-family: "Helvetica Neue Light";
+	src: url('../fonts/helvetica_neue-light-100x90_pcent.eot');
+	src: local('Helvetica Neue Light'), local('HelveticaNeue-Light'), url('../fonts/helvetica_neue-light.svg#hnl') format("svg"), url('../fonts/helvetica_neue-light.ttf') format("truetype")
 }
-@font-face
-{
-	font-family: HelveticaNeueLT-jasoncodes;
-	font-weight: 200;
-	src: url(../fonts/HelveticaNeueLT-jasoncodes.ttf) format("truetype"), url(../fonts/HelveticaNeueLT-jasoncodes.eot) format("embedded-opentype");
-}
+
 body
 {
 	background: white;
@@ -25,8 +20,10 @@ body > header
 body > header > h1
 {
 	margin: 0;
-	font-family: "HelveticaNeueLT-jasoncodes", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-	font-weight: normal;
+	font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	-webkit-transform: scale(1.0, 0.9);
+	-moz-transform: scale(1.0, 0.9);
+	transform: scale(1.0, 0.9);
 	font-weight: 200;
 	font-size: 3.5em;
 	text-transform: lowercase;
@@ -43,8 +40,8 @@ body > header > h1 > span.codes
 }
 body > header > h2
 {
-	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	margin: 0;
+	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	font-weight: 300;
 	font-size: 1.05em;
 	color: #333;
