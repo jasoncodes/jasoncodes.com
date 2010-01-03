@@ -13,6 +13,10 @@ body
 	margin: 8px 16px;
 }
 
+body > header
+{
+	display: block;
+}
 body > header > hgroup
 {
 	display: inline-block;
@@ -65,4 +69,38 @@ body > header > hgroup h2 span.period
 {
 	visibility: hidden;
 	margin: -0.4em;
+}
+
+body > header > aside
+{
+	display: inline-block;
+	margin-left: 0.5em;
+	position: relative;
+	top: -0.15em;
+	font-family: Georgia;
+	font-size: 1.1em;
+	letter-spacing: 0.15em;
+	word-spacing: 0.3em;
+	color: #868c8f;
+}
+body > header > aside strong
+{
+	font-weight: normal;
+}
+body > header > aside .amp
+{
+	font-family: Baskerville, Palatino, "Book Antiqua", serif;
+	font-style: italic;
+}
+body > header > aside .who,
+body > header > aside .what
+{
+	font-family: Optima, "Trebuchet MS";
+	font-size: 1.15em;
+	color: #444;
+	word-spacing: 0;
+}
+body > header > aside .period
+{
+	display: none;
 }
