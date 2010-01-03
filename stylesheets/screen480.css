@@ -1,0 +1,8 @@
+body
+{
+	margin: 2px 8px;
+}
+body > header > hgroup
+{
+	font-size: 85%;
+}

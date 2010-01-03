@@ -11,6 +11,7 @@ body
 	color: black;
 	font-family: "Helvetica", "Arial", sans-serif;
 	margin: 8px 16px;
+	-webkit-text-size-adjust: none;
 }
 
 body > header
@@ -20,8 +21,9 @@ body > header
 body > header > hgroup
 {
 	display: inline-block;
-	margin-bottom: 1em;
 	font-weight: normal;
+	margin-right: 0.5em;
+	margin-bottom: 0.75em;
 }
 body > header > hgroup a
 {
@@ -74,7 +76,6 @@ body > header > hgroup h2 span.period
 body > header > aside
 {
 	display: inline-block;
-	margin-left: 0.5em;
 	position: relative;
 	top: -0.15em;
 	font-family: Georgia;
@@ -99,6 +100,7 @@ body > header > aside .what
 	font-size: 1.15em;
 	color: #444;
 	word-spacing: 0;
+	white-space: nowrap;
 }
 body > header > aside .period
 {
