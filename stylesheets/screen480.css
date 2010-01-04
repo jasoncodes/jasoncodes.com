@@ -1,5 +1,6 @@
 body
 {
+	-webkit-text-size-adjust: none;
 	margin: 2px 8px;
 }
 body > header > hgroup
