@@ -1,4 +1,5 @@
 #!/bin/bash -e
+export PATH="/usr/local/bin:$PATH"
 if [ ! -d .git ]
 then
 	echo Content-Type: text/plain
