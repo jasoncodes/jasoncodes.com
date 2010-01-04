@@ -3,7 +3,7 @@ def jekyll(opts = "")
   sh "rm -rf _site"
   sh "mkdir -p _site"
   sh "ln -s images/favicon.ico _site/"
-  sh "jekyll " + opts
+  sh "bin/jekyll " + opts
 end
 
 task :default => :server
