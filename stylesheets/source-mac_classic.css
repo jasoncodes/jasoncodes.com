@@ -1,0 +1,76 @@
+/*
+A Pygment stylesheet heavily based of TextMate's Mac Classic theme
+By Jason Weathered <http://jasoncodes.com/>
+
+Tested to give reasonable output for: Ruby, HTML, CSS, Javascript, XML, Diff, C, Java
+*/
+
+pre.source .hll { background-color: #ffffcc; }
+pre.source  { background: white; color: black; }
+pre.source .c { color: #06F; font-style: italic; } /* Comment */
+pre.source .err { border: 1px solid #FF0000; } /* Error */
+pre.source .k { color: blue; } /* Keyword */
+pre.source-css .k { color: #6D79DE; } /* Keyword */
+pre.source .o { color: black; } /* Operator */
+pre.source-javascript .o { color: #687687; } /* Operator */
+pre.source .cm { color: #06F; font-style: italic; } /* Comment.Multiline */
+pre.source .cp { color: #036A07; } /* Comment.Preproc */
+pre.source .c1 { color: #06F; font-style: italic; } /* Comment.Single */
+pre.source .cs { color: #06F; font-style: italic; } /* Comment.Special */
+pre.source .gd { color: #A00000; } /* Generic.Deleted */
+pre.source .ge { font-style: italic; } /* Generic.Emph */
+pre.source .gr { color: #FF0000; } /* Generic.Error */
+pre.source .gh { color: #000080; } /* Generic.Heading */
+pre.source .gi { color: #00A000; } /* Generic.Inserted */
+pre.source .go { color: #808080; } /* Generic.Output */
+pre.source .gp { color: #000080; } /* Generic.Prompt */
+pre.source .gs { font-weight: bold; } /* Generic.Strong */
+pre.source .gu { color: #3e8a97; } /* Generic.Subheading */
+pre.source .gt { color: #0040D0; } /* Generic.Traceback */
+pre.source .kc { color: #585CF6; } /* Keyword.Constant */
+pre.source .kd { color: blue; } /* Keyword.Declaration */
+pre.source .kn { color: blue; } /* Keyword.Namespace */
+pre.source .kp { color: #585CF6; } /* Keyword.Pseudo */
+pre.source .kr { color: blue; } /* Keyword.Reserved */
+pre.source .kt { color: blue; } /* Keyword.Type */
+pre.source .m { color: #C5060B; } /* Literal.Number */
+pre.source .s { color: #036A07; } /* Literal.String */
+pre.source .na { color: blue; font-style: italic; } /* Name.Attribute */
+pre.source-java .na { color: black; font-style: normal; } /* Name.Attribute */
+pre.source .nb { color: blue; } /* Name.Builtin */
+pre.source .nc { text-decoration: underline; } /* Name.Class */
+pre.source-css .nc { text-decoration: none; } /* Name.Class */
+pre.source .no { color: #318495; } /* Name.Constant */
+pre.source .nd { color: blue; } /* Name.Decorator */
+pre.source-css .nd { color: black; font-style: italic; } /* Name.Decorator */
+pre.source .ni { color: #C5060B; } /* Name.Entity */
+pre.source .ne { color: #6D79DE; } /* Name.Exception */
+pre.source .nf { color: #0000A2; } /* Name.Function */
+pre.source .nl { color: black; } /* Name.Label */
+pre.source .nn { text-decoration: underline; } /* Name.Namespace */
+pre.source-java .nn { color: blue; text-decoration: none; } /* Name.Namespace */
+pre.source .nt { color: blue; } /* Name.Tag */
+pre.source-css .nt { color: black; font-weight: bold; } /* Name.Tag */
+pre.source .nv { color: #318495; } /* Name.Variable */
+pre.source .ow { color: blue; } /* Operator.Word */
+pre.source .w { color: #bbbbbb; } /* Text.Whitespace */
+pre.source .mf { color: #0000A2; } /* Literal.Number.Float */
+pre.source .mh { color: #0000A2; } /* Literal.Number.Hex */
+pre.source .mi { color: #0000A2; } /* Literal.Number.Integer */
+pre.source .mo { color: #0000A2; } /* Literal.Number.Oct */
+pre.source .sb { color: #036A07; } /* Literal.String.Backtick */
+pre.source .sc { color: #036A07; } /* Literal.String.Char */
+pre.source .sd { color: #036A07; } /* Literal.String.Doc */
+pre.source .s2 { color: #036A07; } /* Literal.String.Double */
+pre.source .se { color: #26B31A; } /* Literal.String.Escape */
+pre.source .sh { color: #036A07; } /* Literal.String.Heredoc */
+pre.source .si { color: #26B31A; } /* Literal.String.Interpol */
+pre.source .sx { color: #036A07; } /* Literal.String.Other */
+pre.source .sr { color: #036A07; } /* Literal.String.Regex */
+pre.source .s1 { color: #036A07; } /* Literal.String.Single */
+pre.source .ss { color: #C5060B; } /* Literal.String.Symbol */
+pre.source .bp { color: #585CF6; } /* Name.Builtin.Pseudo */
+pre.source .vc { color: #318495; } /* Name.Variable.Class */
+pre.source .vg { color: #318495; } /* Name.Variable.Global */
+pre.source .vi { color: #318495; } /* Name.Variable.Instance */
+pre.source .il { color: #0000A2; } /* Literal.Number.Integer.Long */
