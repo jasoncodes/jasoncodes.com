@@ -23,12 +23,13 @@ then
 	fi
 else
 	cd ..
-	[ -e public_html.tmp ] && rm -rf public_html.tmp
-	(cd repo && git checkout-index --all --prefix=../public_html.tmp/)
+	[ -e build.tmp ] && rm -rf build.tmp
+	(cd repo && git checkout-index --all --prefix=../build.tmp/) || exit 1
+	(cd build.tmp && rake build) || exit 1
 	[ -e public_html.new ] && rm -rf public_html.new
 	[ ! -e public_html ] || rsync --archive public_html/ public_html.new
-	rsync -rlpgoDO --checksum --delete public_html.tmp/ public_html.new/
-	rm -rf public_html.tmp
+	rsync -rlpgoDO --checksum --delete build.tmp/_site/ public_html.new/
+	rm -rf build.tmp
 	[ -e public_html.old ] && rm -rf public_html.old
 	[ ! -e public_html ] || mv public_html{,.old}
 	mv public_html{.new,}

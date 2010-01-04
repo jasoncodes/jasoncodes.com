@@ -1,0 +1,4 @@
+server_port: 3000
+
+exclude:
+  - Rakefile
