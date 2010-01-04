@@ -3,6 +3,7 @@ def jekyll(opts = "")
   sh "rm -rf _site"
   sh "mkdir -p _site"
   sh "ln -s images/favicon.ico _site/"
+  sh "cp -a _deploy.{php,sh} _site/"
   sh "bin/jekyll " + opts
 end
 
