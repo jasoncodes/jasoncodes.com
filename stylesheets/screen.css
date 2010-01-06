@@ -105,3 +105,14 @@ body > header > aside .period
 {
 	display: none;
 }
+body > header > aside a
+{
+	text-decoration: none;
+	color: inherit;
+}
+body > header > aside a:hover,
+body > header > aside a:active,
+body > header > aside a:focus
+{
+	text-decoration: underline;
+}
