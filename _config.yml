@@ -1,3 +1,6 @@
+markdown: rdiscount
+pygments: true
+permalink: /:year/:month/:day/:title.html
 server_port: 3000
 
 exclude:
