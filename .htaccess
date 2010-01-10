@@ -50,3 +50,7 @@ AddType font/otf otf
 AddType application/vnd.ms-fontobject eot
 AddType image/vnd.microsoft.icon ico
 
+# tell IE we want the best renderer available (Chrome Frame if possible)
+<Files "*.html">
+	Header set X-UA-Compatible "IE=edge,chrome=1"
+</Files>
