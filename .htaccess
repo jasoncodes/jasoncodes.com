@@ -4,12 +4,15 @@ RewriteEngine On
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
+# redirect my name domain to my vanity domain
 RewriteCond %{HTTP_HOST} ^jasonweathered\.com$ [NC]
 RewriteRule ^(.*)$ http://jasoncodes.com/$1 [R=301,L]
 
+# no caching on our text/html content (maybe later)
 ExpiresActive On
 ExpiresByType text/html "access"
 
+# set content types for fonts and icons
 AddType font/ttf ttf
 AddType font/otf otf
 AddType application/vnd.ms-fontobject eot
