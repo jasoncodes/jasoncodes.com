@@ -1,0 +1,8 @@
+---
+layout: default
+title: 404 Not Found
+---
+
+# 404 Not Found
+
+These aren't the droids you're looking for.

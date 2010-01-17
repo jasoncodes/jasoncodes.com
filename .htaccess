@@ -50,6 +50,13 @@ AddType font/otf otf
 AddType application/vnd.ms-fontobject eot
 AddType image/vnd.microsoft.icon ico
 
+# set our 404 handler
+# we don't use "404.html" here as our rewrite rules from above apply
+# (i.e. it would 301 to /404.html instead of returning 404)
+ErrorDocument 404 /404
+# we get a 403 from accessing directories without index files. This is effectively a 404 as well.
+ErrorDocument 403 /404
+
 # tell IE we want the best renderer available (Chrome Frame if possible)
 <Files "*.html">
 	Header set X-UA-Compatible "IE=edge,chrome=1"
