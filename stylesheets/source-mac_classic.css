@@ -2,7 +2,7 @@
 A Pygment stylesheet heavily based of TextMate's Mac Classic theme
 By Jason Weathered <http://jasoncodes.com/>
 
-Tested to give reasonable output for: Ruby, HTML, CSS, Javascript, XML, Diff, C, Java
+Tested to give reasonable output for: Ruby, HTML, CSS, Javascript, Haml, Sass, XML, Diff, C, Java
 */
 
 pre.source .hll { background-color: #ffffcc; }
@@ -15,6 +15,7 @@ pre.source .o { color: black; } /* Operator */
 pre.source-javascript .o { color: #687687; } /* Operator */
 pre.source .cm { color: #06F; font-style: italic; } /* Comment.Multiline */
 pre.source .cp { color: #036A07; } /* Comment.Preproc */
+pre.source-haml .cp { color: #06F; font-style: italic; } /* Comment.Preproc */
 pre.source .c1 { color: #06F; font-style: italic; } /* Comment.Single */
 pre.source .cs { color: #06F; font-style: italic; } /* Comment.Special */
 pre.source .gd { color: #A00000; } /* Generic.Deleted */
@@ -33,19 +34,26 @@ pre.source .kn { color: blue; } /* Keyword.Namespace */
 pre.source .kp { color: #585CF6; } /* Keyword.Pseudo */
 pre.source .kr { color: blue; } /* Keyword.Reserved */
 pre.source .kt { color: blue; } /* Keyword.Type */
+pre.source-sass .kt { color: #C5060B; } /* Keyword.Type */
 pre.source .m { color: #C5060B; } /* Literal.Number */
 pre.source .s { color: #036A07; } /* Literal.String */
 pre.source .na { color: blue; font-style: italic; } /* Name.Attribute */
 pre.source-java .na { color: black; font-style: normal; } /* Name.Attribute */
+pre.source-sass .na { color: black; font-style: normal; } /* Name.Attribute */
 pre.source .nb { color: blue; } /* Name.Builtin */
 pre.source .nc { text-decoration: underline; } /* Name.Class */
 pre.source-css .nc { text-decoration: none; } /* Name.Class */
+pre.source-sass .nc { text-decoration: none; font-style: italic; } /* Name.Class */
+pre.source-haml .nc { text-decoration: none; font-weight: bold; } /* Name.Tag */
 pre.source .no { color: #318495; } /* Name.Constant */
+pre.source-sass .no { color: green; } /* Name.Constant */
 pre.source .nd { color: blue; } /* Name.Decorator */
 pre.source-css .nd { color: black; font-style: italic; } /* Name.Decorator */
 pre.source .ni { color: #C5060B; } /* Name.Entity */
 pre.source .ne { color: #6D79DE; } /* Name.Exception */
 pre.source .nf { color: #0000A2; } /* Name.Function */
+pre.source-sass .nf { color: black; } /* Name.Function */
+pre.source-haml .nf { color: black; font-weight: 600; } /* Name.Function */
 pre.source .nl { color: black; } /* Name.Label */
 pre.source .nn { text-decoration: underline; } /* Name.Namespace */
 pre.source-java .nn { color: blue; text-decoration: none; } /* Name.Namespace */
