@@ -9,7 +9,8 @@ body
 {
 	background: white;
 	color: black;
-	font-family: Palatino, Georgia, 'Times New Roman', Times, serif;
+	font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 95%;
 	margin: 8px 16px;
 }
 
@@ -37,7 +38,7 @@ body > header > hgroup h1
 	-moz-transform: scale(1.0, 0.9);
 	transform: scale(1.0, 0.9);
 	font-weight: 200;
-	font-size: 3.5em;
+	font-size: 3.70em;
 	text-transform: lowercase;
 	line-height: 0.95em;
 	letter-spacing: 0.08em;
@@ -55,7 +56,7 @@ body > header > hgroup h2
 	margin: 0;
 	font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	font-weight: 300;
-	font-size: 1.05em;
+	font-size: 1.10em;
 	color: #333;
 	letter-spacing: 0.25em;
 	text-transform: lowercase;
@@ -78,7 +79,7 @@ body > header > aside
 	position: relative;
 	top: -0.15em;
 	font-family: Georgia;
-	font-size: 1.1em;
+	font-size: 1.15em;
 	letter-spacing: 0.15em;
 	word-spacing: 0.3em;
 	color: #868c8f;
