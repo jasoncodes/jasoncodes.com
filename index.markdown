@@ -1,5 +1,6 @@
 ---
 layout: default
+site_index: true
 ---
 
 Oh, hi. I didn't see you there.
