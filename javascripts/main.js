@@ -11,7 +11,7 @@ $(function()
 	
 	$("a[rel~=external]").click(function()
 	{
-		var track_path = null
+		var track_path = null;
 		if (this.hostname != null && this.hostname != window.location.hostname)
 		{
 			track_path = '/external/' + this.hostname;
@@ -26,7 +26,7 @@ $(function()
 		}
 		if (track_path && typeof(pageTracker) != 'undefined' && pageTracker._trackPageview)
 		{
-			pageTracker._trackPageview(track_path)
+			pageTracker._trackPageview(track_path);
 		}
 	});
 	
