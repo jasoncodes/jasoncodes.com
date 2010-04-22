@@ -2,12 +2,11 @@
 layout: default
 ---
 
-Nothing to see here&hellip; yet.
+Oh, hi. I didn't see you there.
 
-There's also not much to see yet on my
-<a href="http://github.com/jasoncodes" rel="me">github account</a>,
-but you might find some interesting things in my [watch list][github-watch].
+You'll find any code I've published at my <a href="http://github.com/jasoncodes" rel="me">GitHub account</a>
+(with some interesting/useful things I've found during my travels in my [watch list][github-watch]).
 
-Ah, laziness. Where would I be without it? Places probably.
+I expect an actual blog to turn up here eventually. (Ah, laziness. Where would I be without it?). Until then, you can find my random comments and retweets on various happenings in my <a href="http://twitter.com/jasoncodes" rel="me">twitter stream</a>.
 
 [github-watch]: http://github.com/jasoncodes/following
