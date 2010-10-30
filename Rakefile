@@ -1,5 +1,7 @@
 def jekyll(opts = "")
-  sh "pygmentize -V > /dev/null"
+  sh "pygmentize -V > /dev/null" do |ok, res|
+    ok or fail "Pygments not found: Install it with `sudo easy_install 'Pygments>=1.3'`."
+  end
   sh "rm -rf _site"
   sh "mkdir -p _site"
   sh "ln -s images/favicon.ico _site/"
