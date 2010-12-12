@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
+require 'bundler'
+Bundler.require
+
 require 'active_support'
 require 'active_support/core_ext/module/aliasing'
 
@@ -29,4 +32,5 @@ class Albino
   
 end
 
-load Gem.bin_path 'jekyll'
+jekyll_bin_path = Gem.bin_path('jekyll')
+eval File.read(jekyll_bin_path), nil, jekyll_bin_path
