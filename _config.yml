@@ -6,3 +6,10 @@ server_port: 3000
 exclude:
   - Rakefile
   - bin
+
+title: Jason Codes
+url: http://jasoncodes.com
+
+author:
+  name: Jason Weathered
+  email: jason@jasoncodes.com
