@@ -18,7 +18,7 @@ class Albino
     html = colorize_without_wrapped_lines(options)
     
     # wrap each line in <code/> so we can style them easier
-    html.gsub! /^.*$/, '<code>\0</code>'
+    html.gsub!(/^.*$/, '<code>\0</code>')
     
     # wrap the result in a <pre/> with our desired CSS classes
     "<pre class=\"source source-#{@options[:l]}\">#{html}</pre>"
