@@ -1,0 +1,101 @@
+@font-face
+  font-family: "Helvetica Neue Light"
+  src: url('../fonts/helvetica_neue-light-100x90_pcent.eot')
+  src: local("Helvetica Neue Light"), local("HelveticaNeue-Light"), url('../fonts/helvetica_neue-light.svg#hnl') format("svg"), url('../fonts/helvetica_neue-light.ttf') format("truetype")
+
+=hover_link
+  text-decoration: none
+  color: inherit
+  &:hover, &:active, &:focus
+    text-decoration: underline
+
+body
+  background: white
+  color: black
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
+  font-size: 95%
+  margin: 8px 16px
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+  font-weight: normal
+
+code, tt
+  font-family: Menlo, Monaco, Courier, 'Courier New', monospace
+  font-size: 0.90em
+  letter-spacing: 1.1pt
+  p &
+    background-color: rgba(128, 128, 128, 0.1)
+    padding: 0.1em 0.25em
+
+pre
+  margin-left: 1em
+
+body > header
+  display: block
+  >
+    hgroup
+      display: inline-block
+      font-weight: normal
+      margin-right: 0.5em
+      margin-bottom: 0.75em
+      a
+        color: inherit
+        text-decoration: none
+      h1
+        margin: 0
+        font-family: "Helvetica Neue Light", "Helvetica Neue", "Helvetica", "Arial", sans-serif
+        -webkit-transform: scale(1, 0.9)
+        -moz-transform: scale(1, 0.9)
+        transform: scale(1, 0.9)
+        font-weight: 200
+        font-size: 3.70em
+        text-transform: lowercase
+        line-height: 0.95em
+        letter-spacing: 0.08em
+        span
+          &.space
+            display: none
+          &.codes
+            color: #999
+      h2
+        margin: 0
+        font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif
+        font-weight: 300
+        font-size: 1.10em
+        color: #333
+        letter-spacing: 0.25em
+        text-transform: lowercase
+        float: right
+        border-top: 0.125em solid #ddd
+        margin-right: 0.42em
+        padding-left: 0em
+        line-height: 1em
+        white-space: nowrap
+        span.period
+          visibility: hidden
+          margin: -0.4em
+    aside
+      display: inline-block
+      position: relative
+      top: -0.15em
+      font-family: Georgia
+      font-size: 1.15em
+      letter-spacing: 0.15em
+      word-spacing: 0.3em
+      color: #868c8f
+      strong
+        font-weight: normal
+      .amp
+        font-family: Baskerville, Palatino, "Book Antiqua", serif
+        font-style: italic
+      .who, .what
+        font-family: Optima, "Trebuchet MS"
+        font-size: 1.15em
+        color: #444
+        word-spacing: 0
+        white-space: nowrap
+      .period
+        display: none
+      a
+        +hover_link
