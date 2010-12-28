@@ -28,16 +28,18 @@
 				<span class="what">code <span class="amp">&amp;</span> rants</span> of
 				<a href="http://jasonweathered.com/"{% if page.site_index %} rel="me"{% endif %}><strong class="who">Jason Weathered</strong></a><span class="period">.</span>
 			</aside>
-			<ul class="links">
-				{% for item in site.links %}
-					<li class="{{ item.key }}">
-						<a href="{{ item.url }}"{% if page.site_index %}{% if item.me %} rel="me"{% endif %}{% endif %}>
-							<span class="name">{{ item.name }}</span>
-							<span class="suffix">{{ item.suffix }}</span>
-						</a>
-					</li>
-				{% endfor %}
-			</ul>
+			{% if page.site_index %}
+				<ul class="links">
+					{% for item in site.links %}
+						<li class="{{ item.key }}">
+							<a href="{{ item.url }}"{% if item.me %} rel="me"{% endif %}>
+								<span class="name">{{ item.name }}</span>
+								<span class="suffix">{{ item.suffix }}</span>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 		</header>
 		{{ content }}
 		<script type="text/javascript">
