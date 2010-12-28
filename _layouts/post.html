@@ -1,0 +1,23 @@
+---
+layout: default
+---
+<article>
+	<header>
+		<h1>
+			<a href="{{ page.url }}">{{ page.title }}</a>
+		</h1>
+		<p>
+			<span class="posted">
+				Posted
+				<time pubdate>{{ page.date | date: "%Y-%m-%d") }}</time>
+			</span>
+			{% if page.updated %}
+				<span class="updated">
+					(updated <time>{{ page.updated | date: "%Y-%m-%d") }}</time>)
+				</span>
+			{% endif %}
+	</header>
+	<section>
+		{{ content }}
+	</section>
+</article>
