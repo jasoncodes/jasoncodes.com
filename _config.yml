@@ -13,3 +13,23 @@ url: http://jasoncodes.com
 author:
   name: Jason Weathered
   email: jason@jasoncodes.com
+
+links:
+
+  - key: twitter
+    url: http://twitter.com/jasoncodes
+    name: Twitter
+    suffix: stream
+    me: true
+
+  - key: github
+    url: http://github.com/jasoncodes
+    name: GitHub
+    suffix: repositories
+    me: true
+
+  - key: stackoverflow
+    url: http://stackoverflow.com/users/3736/jason-weathered
+    name: Stack Overflow
+    suffix: questions &amp; answers
+    me: true
