@@ -36,4 +36,19 @@ module Jekyll
       engine.render
     end
   end
+
+  class StaticFile
+    attr_reader :site, :base, :dir, :name
+  end
+
+  class Site
+    def read_directories_with_sass(dir = '')
+      read_directories_without_sass(dir)
+      sass_files, self.static_files = self.static_files.partition { |sf| sf.name =~ /\.(sass|scss)$/ }
+      self.pages += sass_files.map do |sf|
+        Page.new sf.site, sf.base, sf.dir, sf.name
+      end
+    end
+    alias_method_chain :read_directories, :sass
+  end
 end
