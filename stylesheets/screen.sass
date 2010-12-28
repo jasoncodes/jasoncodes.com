@@ -102,3 +102,36 @@ body > header
         display: none
       a
         +hover_link
+    ul.links
+      list-style: none
+      display: inline-block
+      position: absolute
+      top: 1em
+      right: 1em
+      &, li
+        margin: 0
+        padding: 0
+      a
+        display: block
+        margin-top: 0.5em
+        padding-left: 20px
+        +hover_link
+        color: #aaa
+      span.name
+        display: block
+        color: #888
+        font-size: 90%
+        background-repeat: no-repeat
+        background-position: 0% 50%
+        margin-left: -20px
+        padding-left: 20px
+      span.suffix
+        display: block
+        color: #ccc
+        font-size: 85%
+      li.twitter span.name
+        background-image: url('/images/link-twitter.png')
+      li.github span.name
+        background-image: url('/images/link-github.png')
+      li.stackoverflow span.name
+        background-image: url('/images/link-stackoverflow.png')
