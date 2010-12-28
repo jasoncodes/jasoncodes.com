@@ -57,6 +57,11 @@ class Jekyll::Post
   end
   alias_method_chain :initialize, :updated
   
+  def to_liquid_with_slug
+    to_liquid_without_slug.merge('slug' => self.slug)
+  end
+  alias_method_chain :to_liquid, :slug
+  
 end
 
 jekyll_bin_path = Gem.bin_path('jekyll')
