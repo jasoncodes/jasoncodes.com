@@ -38,11 +38,47 @@ code, tt
   font-size: 0.90em
   letter-spacing: 1.1pt
   li &, p &
-    background-color: rgba(128, 128, 128, 0.1)
+    background-color: #F4F4F4
     padding: 0 0.25em
 
 pre
-  margin-left: 1em
+  margin-left: 1.5em
+
+pre.source
+  counter-reset: line
+  white-space: normal
+  margin-top: 1.5em
+  margin-left: 0
+  margin-right: 0
+  border: 1px solid #eee
+  border-radius: 8px
+  code:before
+    counter-increment: line
+    content: counters(line, "")
+    float: left
+    width: 2.25em
+    margin-left: -3.5em
+    text-align: right
+    color: #ddd
+  code
+    white-space: pre-wrap
+    display: block
+    overflow: hidden
+    padding-left: 3.5em
+    padding-right: 1em
+    padding-top: 1px
+    padding-bottom: 1px
+    background-color: #F9F9F9
+  code:nth-child(odd)
+    background-color: #FCFCFC
+  code:first-child
+    padding-top: 0.25em
+    border-top-left-radius: 8px
+    border-top-right-radius: 8px
+  code:last-child
+    padding-bottom: 0.25em
+    border-bottom-left-radius: 8px
+    border-bottom-right-radius: 8px
 
 li
   margin-bottom: 0.5em
