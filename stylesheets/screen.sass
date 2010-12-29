@@ -21,6 +21,17 @@ h1, h2, h3, h4, h5, h6
   font-weight: normal
   a
     +hover_link
+  &
+    margin-bottom: 0.25em
+  & + *
+    margin-top: 0
+
+article > header
+  h1
+    margin-bottom: 0
+
+section.comments
+  margin-top: 3em
 
 code, tt
   font-family: Menlo, Monaco, Courier, 'Courier New', monospace
@@ -32,6 +43,20 @@ code, tt
 
 pre
   margin-left: 1em
+
+li
+  margin-bottom: 0.5em
+  p
+    margin-top: 0.5em
+    margin-bottom: 0.5em
+  p+p:last-child
+    margin-bottom: 1em
+
+section.posts article
+  margin-bottom: 0.25em
+
+ul.projects li
+  margin-bottom: 0.25em
 
 body > header
   display: block
