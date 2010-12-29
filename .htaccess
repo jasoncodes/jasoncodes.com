@@ -8,6 +8,9 @@ RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 RewriteCond %{HTTP_HOST} ^jasonweathered\.com$ [NC]
 RewriteRule ^(.*)$ http://jasoncodes.com/$1 [R=301,L]
 
+# redirect /feed to FeedBurner
+RewriteRule ^feed$ http://feeds.jasoncodes.com/jasoncodes [R=302,L]
+
 # disable multiviews and directory listings
 # we're going to use rewriting instead of MultiViews
 Options -MultiViews -Indexes
