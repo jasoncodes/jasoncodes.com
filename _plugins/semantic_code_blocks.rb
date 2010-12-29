@@ -23,3 +23,9 @@ class Albino
   alias_method :to_s, :colorize
   
 end
+
+class Jekyll::HighlightBlock < Liquid::Block
+  def add_code_tags(code, lang)
+    code # noop
+  end
+end
