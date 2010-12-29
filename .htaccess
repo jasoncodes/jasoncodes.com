@@ -49,6 +49,12 @@ RewriteRule .* %{REQUEST_URI}.html [E=DONE:1]
 ExpiresActive On
 ExpiresByType text/html "access"
 
+# allow long caching of assets with cache busting
+RewriteCond %{REQUEST_URI} (css|js|jpe?g|png|gif|ico)$ [NC]
+RewriteCond %{QUERY_STRING} ^[0-9]+$
+RewriteRule ^(.*)$ $1 [env=is_cacheable:true]
+Header set Cache-Control "public, max-age=31536000" env=is_cacheable
+
 # set content types for fonts and icons
 AddType font/ttf ttf
 AddType font/otf otf
