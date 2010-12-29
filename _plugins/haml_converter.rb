@@ -1,3 +1,6 @@
+require 'active_support'
+require 'active_support/core_ext/module/aliasing'
+
 module Jekyll
   require 'haml'
   class HamlConverter < Converter
