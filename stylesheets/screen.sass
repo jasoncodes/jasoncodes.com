@@ -14,11 +14,13 @@ body
   color: black
   font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
   font-size: 95%
+  line-height: 1.25em
   margin: 8px 16px
 
 h1, h2, h3, h4, h5, h6
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
   font-weight: normal
+  line-height: normal
   a
     +hover_link
   &
@@ -66,8 +68,6 @@ pre.source
     overflow: hidden
     padding-left: 3.5em
     padding-right: 1em
-    padding-top: 1px
-    padding-bottom: 1px
     background-color: #F9F9F9
   code:nth-child(odd)
     background-color: #FCFCFC
@@ -169,6 +169,7 @@ body > header
       position: absolute
       top: 1em
       right: 1em
+      line-height: normal
       &, li
         margin: 0
         padding: 0
