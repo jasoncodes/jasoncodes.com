@@ -122,7 +122,7 @@ ln -sf /etc/apache2/ssl/example.com.crt /etc/exim4/exim.crt
 ln -sf /etc/apache2/ssl/example.com.key /etc/exim4/exim.key
 {% endhighlight %}
 
-Outlook and Outlook Express are both fairly broken but fortunately I found some workarounds. You'll want to set the following config option for Exim (in /etc/exim4/conf.d/main/03_exim4-config_tlsoptions if you are using split configuration on Debian):
+Outlook and Outlook Express are both fairly broken but fortunately I found some workarounds. You'll want to set the following config option for Exim (in `/etc/exim4/conf.d/main/03_exim4-config_tlsoptions` if you are using split configuration on Debian):
 
 {% highlight bash %}
 # Outlook Express really sucks
