@@ -34,4 +34,6 @@ else
 	[ -e public_html.old ] && rm -rf public_html.old
 	[ ! -e public_html ] || mv public_html{,.old}
 	mv public_html{.new,}
+	wget -q -O /dev/null http://www.feedburner.com/fb/a/pingSubmit?bloglink=http://jasoncodes.com/
+	wget -q -O /dev/null http://www.google.com/webmasters/sitemaps/ping?sitemap=http://jasoncodes.com/sitemap.xml
 fi
