@@ -4,7 +4,7 @@ title: "<tt>gup</tt>: A friendlier <tt>git pull --rebase</tt>"
 date: 2010-11-09
 ---
 
-By now most `git` users would have heard about rebasing your local commits on top of the remote branch HEAD before you `git push` them rather than merging to prevent the proliferation of useless same branch merge commits like "Merge remote branch 'origin/topic' into topic".
+By now most `git` users would have heard about [rebasing your local commits](http://www.gitready.com/intermediate/2009/01/31/intro-to-rebase.html) on top of the remote branch HEAD before you `git push` them rather than merging to [prevent the proliferation of useless same branch merge commits](http://www.viget.com/extend/only-you-can-prevent-git-merge-commits/) like "Merge remote branch 'origin/topic' into topic".
 
 If one is using `git pull`, the rebasing can be accomplished by using `git pull --rebase` instead. This essentially changes `git pull` from doing `git fetch && git merge $TRACKING_BRANCH` to `git fetch && git rebase $TRACKING_BRANCH`.
 
