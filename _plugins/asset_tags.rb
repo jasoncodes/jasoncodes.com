@@ -54,9 +54,11 @@ module Jekyll
     def path_prefix
       "stylesheets/"
     end
+    
     def extensions
       %w(.css .sass .scss)
     end
+    
     def render_tag
       %Q{<link rel="stylesheet" type="text/css" href="#{@remote_path.gsub(/\.\S+$/,'')}.css#{@suffix}"#{@extra || ' media="screen"'}/>}
     end
@@ -66,9 +68,11 @@ module Jekyll
     def path_prefix
       "images/"
     end
+    
     def extensions
       %w(.png .jpg .jpeg)
     end
+    
     def render_tag
       %Q{<img src="#{@remote_path}#{@suffix}"#{@extra}/>}
     end
@@ -78,9 +82,11 @@ module Jekyll
     def path_prefix
       "javascripts/"
     end
+    
     def extensions
       %w(.js)
     end
+    
     def render_tag
       %Q{<script src="#{@remote_path}#{@suffix}"#{@extra.rstrip}></script>}
     end
