@@ -14,4 +14,10 @@ class Jekyll::Post
     self.ext = ext
   end
   
+  def initialize_with_timeless(site, source, dir, name)
+    initialize_without_timeless(site, source, dir, name)
+    self.published = false if self.date.nil?
+  end
+  alias_method_chain :initialize, :timeless
+  
 end
