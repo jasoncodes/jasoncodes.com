@@ -67,6 +67,27 @@ module Jekyll
       %w(.css .sass .scss)
     end
     
+    def calculate_timestamp(context)
+      super
+      # find the page this tag is being rendered in
+      site = context.registers[:site]
+      page = site.pages.detect do |p|
+        @local_path == p.instance_eval { File.join(@base, @dir, @name) }
+      end
+      # if we have a page object (i.e. we are dynamically renderered)
+      if page
+        # render the page if it isn't already rendered
+        if page.output.nil?
+          page = page.clone # we need a clone as rendering isn't idempotent
+          page.render site.layouts, site.site_payload
+        end
+        # extract timestamps out of rendered page
+        asset_timestamps = page.output.scan(%r[url\(["'][^"']+\?(\d+)["']\)]).map(&:first).map(&:to_i)
+        # pick the latest timestamp
+        @timestamp = ([@timestamp] + asset_timestamps).max
+      end
+    end
+    
     def render_tag
       %Q{<link rel="stylesheet" type="text/css" href="#{@remote_path.gsub(/\.\S+$/,'')}.css#{suffix}"#{@extra || ' media="screen"'}/>}
     end
