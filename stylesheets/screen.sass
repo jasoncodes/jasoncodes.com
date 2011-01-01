@@ -201,3 +201,18 @@ body > header
         background-image: url('{% asset /images/link-github.png %}')
       li.stackoverflow span.name
         background-image: url('{% asset /images/link-stackoverflow.png %}')
+
+@media only screen and (max-device-width: 480px)
+  body
+    -webkit-text-size-adjust: none
+    margin: 2px 8px
+    > header > hgroup
+      font-size: 85%
+    > header > aside
+      font-size: 80%
+    > header > ul.links
+      position: static
+      li
+        display: inline-block
+        margin-right: 0.5em
+        font-size: 90%
