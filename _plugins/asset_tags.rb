@@ -20,15 +20,23 @@ module Jekyll
       [nil, "#{path_prefix}#{@name}"]
     end
 
-    def render(context)
-      local_path, @remote_path = find_asset(context)
-      @suffix = if local_path && File.exists?(local_path)
-        "?#{File.mtime(local_path).to_i}"
+    def calculate_timestamp(context)
+      @timestamp = if @local_path && File.exists?(@local_path)
+        File.mtime(@local_path).to_i
       else
         warn "#{@tag_name} '#{@name}' not found"
         nil
       end
+    end
+
+    def render(context)
+      @local_path, @remote_path = find_asset(context)
+      calculate_timestamp context
       render_tag
+    end
+
+    def suffix
+      @timestamp ? "?#{@timestamp}" : ""
     end
 
     def path_prefix
@@ -40,13 +48,13 @@ module Jekyll
     end
 
     def render_tag
-      "#{@remote_path}#{@suffix}"
+      "#{@remote_path}#{suffix}"
     end
   end
 
   class LinkTag < AssetTag
     def render_tag
-      %Q{<link href="#{@remote_path}#{@suffix}"#{@extra}/>}
+      %Q{<link href="#{@remote_path}#{suffix}"#{@extra}/>}
     end
   end
 
@@ -60,7 +68,7 @@ module Jekyll
     end
     
     def render_tag
-      %Q{<link rel="stylesheet" type="text/css" href="#{@remote_path.gsub(/\.\S+$/,'')}.css#{@suffix}"#{@extra || ' media="screen"'}/>}
+      %Q{<link rel="stylesheet" type="text/css" href="#{@remote_path.gsub(/\.\S+$/,'')}.css#{suffix}"#{@extra || ' media="screen"'}/>}
     end
   end
 
@@ -74,7 +82,7 @@ module Jekyll
     end
     
     def render_tag
-      %Q{<img src="#{@remote_path}#{@suffix}"#{@extra}/>}
+      %Q{<img src="#{@remote_path}#{suffix}"#{@extra}/>}
     end
   end
 
@@ -88,7 +96,7 @@ module Jekyll
     end
     
     def render_tag
-      %Q{<script src="#{@remote_path}#{@suffix}"#{@extra.rstrip}></script>}
+      %Q{<script src="#{@remote_path}#{suffix}"#{@extra.rstrip}></script>}
     end
   end
 
