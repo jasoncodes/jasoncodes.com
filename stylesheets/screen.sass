@@ -210,9 +210,11 @@ body > header
       font-size: 85%
     > header > aside
       font-size: 80%
-    > header > ul.links
-      position: static
-      li
-        display: inline-block
-        margin-right: 0.5em
-        font-size: 90%
+
+@media only screen and (max-device-width: 480px), only screen and (device-width: 768px) and (orientation: portrait)
+  body > header > ul.links
+    position: static
+    li
+      display: inline-block
+      margin-right: 0.5em
+      font-size: 90%
