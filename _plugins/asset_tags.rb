@@ -1,4 +1,16 @@
+require 'active_support'
+require 'active_support/core_ext/module/aliasing'
+
 module Jekyll
+
+  class StaticFile
+    def write_with_timestamp(dest)
+      write_without_timestamp(dest).tap do |result|
+        File.utime self.mtime, self.mtime, destination(dest) if result
+      end
+    end
+    alias_method_chain :write, :timestamp
+  end
 
   class AssetTag < Liquid::Tag
     def initialize(tag_name, params, tokens)
