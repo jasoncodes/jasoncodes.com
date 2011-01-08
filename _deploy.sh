@@ -25,7 +25,7 @@ then
 else
 	cd ..
 	[ -e build.tmp ] && rm -rf build.tmp
-	(cd repo && git checkout-index --all --prefix=../build.tmp/) || exit 1
+	rsync --archive repo/ build.tmp
 	(cd build.tmp && bundle install --deployment --path ../vendor/cache && bundle exec rake build) || exit 1
 	[ -e public_html.new ] && rm -rf public_html.new
 	[ ! -e public_html ] || rsync --archive public_html/ public_html.new
