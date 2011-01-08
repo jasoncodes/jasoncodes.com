@@ -2,6 +2,7 @@
 layout: post
 title: Using Sass on Heroku with Hassle
 date: 2010-12-12
+updated: 2011-01-08
 ---
 
 A little while ago [Lucas Willett](http://developingego.com/) and I hacked together [Compass, Rails 3 and Heroku without a Hassle](http://til.developingego.com/post/1266966478/compass-rails-3-and-heroku-without-a-hassle). This is a combination of three components:
@@ -21,6 +22,8 @@ However now I am wanting to use this same setup on an existing project which has
 
 2. [Fix cache busting on Hassle stylesheets.](https://github.com/jasoncodes/hassle/commit/74f9a95ae6273bdc200a46c8bd503fa7704f98a7)
    The monkey patch to ensure Sass stylesheets correctly refresh when you redeploy.
+
+**Update:** I have also made a couple of [tweaks to the HTTP response headers](https://github.com/jasoncodes/hassle/compare/ee74b86...a61495d) to improve the cacheability of the generated stylesheets. By adding a `Last-Modified` header to the response, browsers can use a `If-Modified-Since` header in their request to get a much smaller 304 response if nothing has changed. Ideally browsers will just use the existing `max-age`, but this doesn't happen often enough.
 
 If you'd like to use my fork, add the following to your `Gemfile`:
 
