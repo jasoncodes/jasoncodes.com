@@ -19,6 +19,7 @@ layout: nil
 		<entry>
 			<title type="html">{{ post.title | xml_escape }}</title>
 			<link href="{{ site.url }}{{ post.url }}" rel="alternate" type="text/html" />
+			<published>{{ post.date | date_to_xmlschema }}</published>
 			<updated>{{ post.last_modified | date_to_xmlschema }}</updated>
 			<id>{{ site.url }}{{ post.id }}</id>
 			<content type="html">{{ post.content | xml_escape }}</content>
