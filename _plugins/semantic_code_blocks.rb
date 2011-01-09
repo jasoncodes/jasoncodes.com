@@ -1,7 +1,6 @@
 require 'active_support'
 require 'active_support/core_ext/module/aliasing'
 
-raise 'Albino not loaded' unless defined?(Albino)
 class Albino
   
   def colorize_with_wrapped_lines(options = {})
@@ -24,7 +23,7 @@ class Albino
   
 end
 
-class Jekyll::HighlightBlock < Liquid::Block
+class Jekyll::HighlightBlock
   def add_code_tags(code, lang)
     code # noop
   end
