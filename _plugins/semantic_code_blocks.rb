@@ -29,7 +29,30 @@ class Albino
 end
 
 class Jekyll::HighlightBlock
+  
   def add_code_tags(code, lang)
     code # noop
   end
+  
+  remove_const :SYNTAX
+  SYNTAX = /\A(\w+)(?:\s(.+))?\s\z/
+  
+  def initialize_with_hl_lines(tag_name, markup, tokens)
+    initialize_without_hl_lines(tag_name, markup, tokens)
+    
+    @options['O'].gsub!(/(hl_lines=)([0-9,-]+)/) do |match|
+      prefix = $1
+      lines = []
+      $2.split(',').each do |entry|
+        if entry =~ /\A(\d+)-(\d+)\z/
+          lines += ($1.to_i..$2.to_i).to_a
+        else
+          lines << entry
+        end
+      end
+      "#{prefix}#{lines.join ' '}"
+    end unless @options['O'].nil?
+  end
+  alias_method_chain :initialize, :hl_lines
+  
 end
