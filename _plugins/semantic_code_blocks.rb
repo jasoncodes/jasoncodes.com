@@ -3,13 +3,13 @@ require 'active_support/core_ext/module/aliasing'
 
 class Albino
   
-  def colorize_with_wrapped_lines(options = {})
+  def colorize(options = {})
     
     # disable the built in <div/> and <pre/> wrappers
     options[:O] = "#{@options[:O]},nowrap=true"
     
     # call the colorizer
-    html = colorize_without_wrapped_lines(options)
+    html = execute([@@bin] + convert_options(options))
     
     # wrap each line in <code/> so we can style them easier
     html.gsub!(/^.*$/, '<code>\0</code>')
@@ -18,8 +18,13 @@ class Albino
     "<pre class=\"source source-#{@options[:l]}\">#{html}</pre>"
     
   end
-  alias_method_chain :colorize, :wrapped_lines
   alias_method :to_s, :colorize
+  
+  def convert_options(options = {})
+    @options.merge(options).inject [] do |args, (flag, value)|
+      args += ["-#{flag}", "#{value}"]
+    end
+  end
   
 end
 
