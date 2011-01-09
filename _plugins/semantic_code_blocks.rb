@@ -11,8 +11,14 @@ class Albino
     # call the colorizer
     html = execute([@@bin] + convert_options(options))
     
+    # move whole of <span class="hll"/> onto single line
+    html.gsub! %r[(<span class="hll">)([^\n]*)(\n)(</span>)], '\1\2\4\3'
+    
     # wrap each line in <code/> so we can style them easier
     html.gsub!(/^.*$/, '<code>\0</code>')
+    
+    # convert <span class="hll"/> into <strong/> and add styling hook to <code/>
+    html.gsub! %r[^<code><span class="hll">(.*)</span></code>$], '<code class="hll"><strong>\1</strong></code>'
     
     # wrap the result in a <pre/> with our desired CSS classes
     "<pre class=\"source source-#{@options[:l]}\">#{html}</pre>"
