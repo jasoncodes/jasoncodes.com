@@ -8,7 +8,7 @@ By now most `git` users would have heard about [rebasing your local commits](htt
 
 If one is using `git pull`, the rebasing can be accomplished by using `git pull --rebase` instead. This essentially changes `git pull` from doing `git fetch && git merge $TRACKING_BRANCH` to `git fetch && git rebase $TRACKING_BRANCH`.
 
-There's still the inconvenience of having to stash any uncommited changes before a rebase. If you don't, you'll get messages like "refusing to pull with rebase: your working tree is not up-to-date". This results in a fetch, stash, rebase, pop dance which gets tiring. I think we can do better.
+There's still the inconvenience of having to stash any uncommitted changes before a rebase. If you don't, you'll get messages like "refusing to pull with rebase: your working tree is not up-to-date". This results in a fetch, stash, rebase, pop dance which gets tiring. I think we can do better.
 
 {% highlight bash %}
 function gup
