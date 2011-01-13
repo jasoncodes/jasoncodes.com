@@ -210,6 +210,7 @@ body > header
       li.stackoverflow span.name
         background-image: url('{% asset /images/link-stackoverflow.png %}')
 
+/* iPhone */
 @media only screen and (max-device-width: 480px)
   body
     -webkit-text-size-adjust: none
@@ -219,7 +220,13 @@ body > header
     > header > aside
       font-size: 80%
 
-@media only screen and (max-device-width: 480px), only screen and (device-width: 768px) and (orientation: portrait)
+/* iPhone Landscape */
+@media screen and (min-width: 321px) and (max-width: 480px)
+  body > header > ul.links
+    top: 2px
+
+/* iPhone Portrait, iPad Portrait */
+@media only screen and (max-width: 320px), only screen and (device-width: 768px) and (orientation: portrait)
   body > header > ul.links
     position: static
     li
