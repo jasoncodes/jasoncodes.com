@@ -3,6 +3,21 @@ require 'active_support/core_ext/module/aliasing'
 
 module Jekyll
 
+  class Site
+    attr_accessor :current_page
+  end
+  module Convertible
+    def do_layout_with_current_page(payload, layouts)
+      begin
+        self.site.current_page = self
+        do_layout_without_current_page(payload, layouts)
+      ensure
+        self.site.current_page = nil
+      end
+    end
+    alias_method_chain :do_layout, :current_page
+  end
+
   class StaticFile
     def write_with_timestamp(dest)
       write_without_timestamp(dest).tap do |result|
@@ -24,10 +39,16 @@ module Jekyll
     end
 
     def find_asset(context)
-      ([nil] + extensions).each do |ext|
-        remote_path = "#{path_prefix}#{@name}#{ext}"
-        local_path = File.join context.registers[:site].source, remote_path
-        return [local_path, "/#{remote_path}"] if File.exists? local_path
+      page = context.registers[:site].current_page
+      prefixes = []
+      prefixes << "posts/#{page.slug}/" if page.is_a? Post
+      prefixes << path_prefix
+      prefixes.each do |prefix|
+        ([nil] + extensions).each do |ext|
+          remote_path = "#{prefix}#{@name}#{ext}"
+          local_path = File.join context.registers[:site].source, remote_path
+          return [local_path, "/#{remote_path}"] if File.exists? local_path
+        end
       end
       [nil, "#{path_prefix}#{@name}"]
     end
