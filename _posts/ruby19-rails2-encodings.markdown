@@ -10,7 +10,9 @@ While switching my app over from Ruby Enterprise Edition 1.8.7 to Ruby 1.9.2p0, 
 
 The first problem was the `params` hash was not arriving to my controllers encoding as UTF-8 but instead as ASCII-8BIT. This is not a problem if all your inputs are ASCII-7 but that wasn't so for me. With content such as `café` I was getting an exception later on during the request that had become all too familiar to me: `incompatible character encodings: ASCII-8BIT and UTF-8`.
 
-Rails 3 solves this very nicely by doing a number of things including interpreting params as UTF-8 and adding [workarounds for Internet Explorer](http://railssnowman.info/). I'll leave the workarounds and `accept-charset="UTF-8"` form attributes as an exercise for the reader. I present to you my monkey-patch to interpret all string params as UTF-8. Save the following as `config/initializers/utf8_params.rb`:
+Rails 3 solves this very nicely by doing a number of things including interpreting params as UTF-8 and adding [workarounds for Internet Explorer](http://railssnowman.info/). I'll leave the workarounds and `accept-charset="UTF-8"` form attributes as an exercise for the reader.
+
+We can force Rails to interpret all string parameters as UTF-8 with [a small patch](https://rails.lighthouseapp.com/projects/8994/tickets/4336-ruby19-submitted-string-form-parameters-with-non-ascii-characters-cause-encoding-errors#ticket-4336-3). Save the following as `config/initializers/utf8_params.rb`:
 
 {% highlight ruby %}
 raise "Check if this is still needed on " + Rails.version unless Rails.version == '2.3.10'
@@ -29,7 +31,7 @@ class ActionController::Base
       object
     end
     force_encoding = lambda do |o|
-      o.force_encoding Encoding::UTF_8 if o.respond_to? :force_encoding
+      o.force_encoding(Encoding::UTF_8) if o.respond_to?(:force_encoding)
     end
     traverse.call(params, force_encoding)
   end
