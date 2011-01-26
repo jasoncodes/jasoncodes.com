@@ -2,6 +2,7 @@
 layout: post
 title: Clean Google Analytics tracking data from your URLs
 date: 2011-01-09
+updated: 2011-01-26
 ---
 
 FeedBurner has a feature which integrates with Google Analytics to tell you how many of your hits come via feed readers. This is rather useful because feed readers typically don't pass any useful referrer information (especially desktop clients). This tracking can be enabled by ticking the "[Track clicks as a traffic source in Google Analytics](http://www.google.com/support/feedburner/bin/answer.py?hl=en&answer=165769)" option in your FeedBurner account.
@@ -21,7 +22,7 @@ var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-XXXXX-X']);
 _gaq.push(['_trackPageview']);
 _gaq.push(function() {
-  if (history.replaceState) history.replaceState(null, '', location.pathname);
+  if (history.replaceState) history.replaceState(null, '', location.pathname + location.hash);
 });
 
 (function() {
@@ -30,3 +31,5 @@ _gaq.push(function() {
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 {% endhighlight %}
+
+**Update:** I originally called `replaceState` with just `location.pathname` but that resulted in the removal of anchors within a page (e.g. links to comments). The code has been updated to `location.pathname + location.hash` to keep anchors. e.g. `/foo/bar?utm_medium=example#comment-42` will now be replaced with `/foo/bar#comment-42`.
