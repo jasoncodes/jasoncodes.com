@@ -30,6 +30,7 @@ layout: default
 			var disqus_title = "{{ page.title }}";
 			var disqus_developer = location.host.match(/(\.local|^localhost)(:\d+)?/) ? 1 : 0;
 			(function() {
+				if (location.host.match(/(\.local|^localhost)(:\d+)?/)) return;
 				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
 				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
