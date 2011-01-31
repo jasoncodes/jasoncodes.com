@@ -7,10 +7,12 @@ Tested to give reasonable output for: Ruby, HTML, CSS, Javascript, Haml, Sass, X
 
 pre.source .hll { background-color: #ffffcc; }
 pre.source  { background: white; color: black; }
+pre.source-apache { color: #C5060B; }
 pre.source .c { color: #06F; font-style: italic; } /* Comment */
 pre.source .err { border: 1px solid #FF0000; } /* Error */
 pre.source .k { color: blue; } /* Keyword */
 pre.source-css .k { color: #6D79DE; } /* Keyword */
+pre.source-apache .k { color: #C5060B; } /* Keyword */
 pre.source .o { color: black; } /* Operator */
 pre.source-javascript .o { color: #687687; } /* Operator */
 pre.source .cm { color: #06F; font-style: italic; } /* Comment.Multiline */
@@ -41,6 +43,7 @@ pre.source .na { color: blue; font-style: italic; } /* Name.Attribute */
 pre.source-java .na { color: black; font-style: normal; } /* Name.Attribute */
 pre.source-sass .na { color: black; font-style: normal; } /* Name.Attribute */
 pre.source .nb { color: blue; } /* Name.Builtin */
+pre.source-apache .nb { color: black; } /* Name.Builtin */
 pre.source .nc { text-decoration: underline; } /* Name.Class */
 pre.source-css .nc { text-decoration: none; } /* Name.Class */
 pre.source-sass .nc { text-decoration: none; font-style: italic; } /* Name.Class */
