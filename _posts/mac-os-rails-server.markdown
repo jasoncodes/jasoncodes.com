@@ -914,12 +914,12 @@ done
 # rsync with a retry. sometimes there's intermittent connectivity issues.
 function do_rsync()
 {
-  if ! rsync --archive --delete-after --partial-dir=.partial --bwlimit $BWLIMIT -4 "$@"
+  if ! rsync --archive --delete-after --partial-dir=.partial --bwlimit $BWLIMIT "$@"
   then
     echo rsync failed: "$@"
     sleep 5m
     echo retrying...
-    rsync --archive --delete-after --partial-dir=.partial --bwlimit $BWLIMIT -4 "$@"
+    rsync --archive --delete-after --partial-dir=.partial --bwlimit $BWLIMIT "$@"
     echo retried.
   fi
 }
