@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Ruby 1.9.2 encoding issues with Rails 2.3.10
+short: utf8
 date: 2010-12-30
 ---
 

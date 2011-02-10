@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Using Sass on Heroku with Hassle
+short: sass
 date: 2010-12-12
 updated: 2011-01-08
 ---

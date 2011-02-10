@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "<tt>gup</tt>: A friendlier <tt>git pull --rebase</tt>"
+short: gup
 date: 2010-11-09
 updated: 2011-01-11
 ---

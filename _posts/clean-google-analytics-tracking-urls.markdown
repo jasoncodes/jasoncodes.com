@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Clean Google Analytics tracking data from your URLs
+short: ga
 date: 2011-01-09
 updated: 2011-01-26
 ---

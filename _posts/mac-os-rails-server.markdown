@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Hosting Rails apps on a Mac OS X server
+short: hostmac
 date: 2011-02-07
 ---
 
