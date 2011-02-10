@@ -1,3 +1,5 @@
+---
+---
 RewriteEngine On
 
 # no-www
@@ -15,6 +17,10 @@ RewriteRule ^feed$ http://feeds.jasoncodes.com/jasoncodes [R=302,L]
 # we're going to use rewriting instead of MultiViews
 Options -MultiViews -Indexes
 DirectorySlash Off
+
+# short post URLs
+{% for post in site.posts %}{% if post.short %}redirect 301 /{{ post.short }} {{ site.url }}{{ post.id }}
+{% endif %}{% endfor %}
 
 # our post receive hook's URL is /_deploy
 # this week we're using PHP to handle it (fake MultiViews)

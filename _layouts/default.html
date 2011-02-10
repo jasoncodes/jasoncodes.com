@@ -4,7 +4,8 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{% if !page.title %}{{ page.title | strip_html }} &ndash; {% endif %}Jason Codes{% if page.site_index %} :: {{ site.subtitle }}{% endif %}</title>
 		<meta name="author" content="{{ site.author.name }}" />
-		{% if site.feed_url %}<link href="{{ site.feed_url }}" rel="alternate" title="{{ site.title }}" type="application/atom+xml" />{% endif %}
+		{% if site.feed_url %}<link href="{{ site.feed_url }}" rel="alternate" title="{{ site.title }}" type="application/atom+xml" />{% endif %}{% if page.short %}
+		<link rel="shorturl" href="{{ site.url }}/{{ page.short }}" />{% endif %}
 		{% link images/favicon.ico rel="shortcut icon" type="image/vnd.microsoft.icon" %}
 		{% link images/favicon.png rel="icon" type="image/png" %}
 		{% link images/apple-touch-icon.png rel="apple-touch-icon" type="image/png" %}
