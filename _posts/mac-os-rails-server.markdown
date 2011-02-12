@@ -3,9 +3,12 @@ layout: post
 title: Hosting Rails apps on a Mac OS X server
 short: hostmac
 date: 2011-02-07
+updated: 2011-02-12
 ---
 
 There are many guides for setting up Rails development environments on various platforms including Mac OS and Ubuntu. I thought I'd mix it up a little with my complete guide on setting up a production Mac OS server.
+
+**Update 2011-02-12**: Added a note to the [backups](#backups) section on excluding large changing files (such as databases) from Time Machine backups.
 
 # Contents
 
@@ -837,11 +840,21 @@ If you `kill -STOP` or otherwise break a service and you should get an email let
 
 My current local backup solution consists of both Time Machine backups to a Time Capsule and a weekly startup disk image with [Carbon Copy Cloner](http://www.bombich.com/).
 A problem with both of these solutions though is that they can't quiesce database writes to allow atomic snapshots. Hopefully Apple's working on their own ZFS/brtfs alternative for Mac OS 10.7 Lion which will allow cheap copy-on-write snapshots.
-Until then, we need to make database dumps which can be picked up by our backup system. We can also `rsync` these backups offsite.
 
+Until Time Machine can take atomic snapshots and efficiently backup large changing files, we need to make database dumps which can be picked up by our backup system. This applies to both PostgreSQL databases and and other large and changing files such as our Solr indexes.
+
+**Update**: To prevent Time Machine from backing up these files you can mark them as excluded either in the Time Machine preference pane or with `xattr`:
+
+{% highlight bash %}
+sudo xattr -w com.apple.metadata:com_apple_backup_excludeItem com.apple.backupd /usr/local/var/postgres # [...]
+{% endhighlight %}
+
+If you don't exclude these directories from Time Machine, you'll find that your backup increments will be large and you'll quickly lose your history as Time Machine starts pruning old backups to make room. The worst bit is copying those large files every hour will put a noticeable resource strain on your machine.
+
+If you want to audit what Time Machine is backing up (highly recommended if you suspect your backups are larger than they should be), I've found the easiest way is TimeTracker from [CharlesSoft](http://www.charlessoft.com/) (the makers of the handy Pacifist tool). I found I had to run it under `sudo` with the Time Machine backup mounted to avoid errors.
+
+I have a backup script which I run daily. It archives PostgreSQL databases and Solr indexes locally and then `rsync`s them along with my Git repos to an offsite VPS. Since we're archiving locally, we might as well send these same backups offsite.
 If your databases are large you might want to look into [continuous archiving](http://stackoverflow.com/questions/2094963/postgresql-improving-pg-dump-pg-restore-performance) to create incremental backups. Be sure to perform full [base backups](http://www.postgresql.org/docs/9.0/static/continuous-archiving.html#BACKUP-BASE-BACKUP) regularly with any incremental setup (I recommend weekly).
-
-I have a backup script which I run daily. It archives PostgreSQL databases and Solr indexes locally and then `rsync`s them along with my Git repos to an offsite VPS.
 
 The script makes use of my [`lib_exclusive_lock`](https://github.com/jasoncodes/scripts/blob/master/lib_exclusive_lock.sh) functions to prevent concurrent executions. With sufficiently large databases and a slow enough upstream this becomes a problem.
 
