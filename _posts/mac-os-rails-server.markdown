@@ -693,6 +693,8 @@ Finally, start Tomcat with the following:
 sudo launchctl load -w /Library/LaunchAgents/org.apache.tomcat.plist
 {% endhighlight %}
 
+To upgrade Tomcat to a newer version in the future, see my [Upgrading Tomcat with Homebrew](/posts/homebrew-tomcat-upgrade) post.
+
 
 # Git Hosting [git]
 
@@ -834,6 +836,10 @@ sudo launchctl load -w /Library/LaunchDaemons/monit.plist
 {% endhighlight %}
 
 If you `kill -STOP` or otherwise break a service and you should get an email letting you know. You can view the current status with `sudo monit status`.
+
+## Restarting failed services
+
+A great feature of Monit is that it can run tasks for you when something bad happens. In the case of Tomcat, I have created a script which kills Tomcat and then relaunches it. See my [Restarting Tomcat automatically on Mac OS with Monit](/posts/homebrew-tomcat-monit) post for details.
 
 
 # Backups [backups]
