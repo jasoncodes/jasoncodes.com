@@ -2,8 +2,6 @@
 export PATH="/usr/local/bin:$PATH"
 if [ ! -d .git ]
 then
-	echo Content-Type: text/plain
-	echo
 	LOG_FILE="`mktemp -t jasoncodes_deploy.log.XXXXXX`"
 	trap '{ rm -f "$LOG_FILE"; }' EXIT
 	(
