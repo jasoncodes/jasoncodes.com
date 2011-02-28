@@ -4,7 +4,7 @@ if [ ! -d .git ]
 then
 	LOG_FILE="`mktemp -t jasoncodes_deploy.log.XXXXXX`"
 	trap '{ rm -f "$LOG_FILE"; }' EXIT
-	(
+	if (
 		set -e
 		cd ../repo
 		git fetch origin
@@ -13,7 +13,6 @@ then
 		chmod +x _deploy.sh
 		./_deploy.sh
 	) > "$LOG_FILE" 2>&1
-	if [ "$?" -eq 0 ]
 	then
 		echo Deploy succeeded.
 	else
