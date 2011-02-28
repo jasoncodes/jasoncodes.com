@@ -1,7 +1,7 @@
 markdown: rdiscount
 pygments: true
 permalink: /posts/:title
-server_port: 3000
+server_port: 4000
 
 exclude:
   - Rakefile
