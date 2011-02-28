@@ -245,7 +245,7 @@ And finally here's my template for all vhosts which we'll be using a bit later:
   # no-www
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-  RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+  RewriteRule ^(.*)$ http://%1$1 [R=301,L]
 
   ServerAdmin webmaster@example.com
   DocumentRoot /Users/example/apps/example/production/current/public/
