@@ -12,9 +12,9 @@
 body
   background: white
   color: black
-  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
-  font-size: 95%
-  line-height: 1.25em
+  font-family: Palatino, 'Book Antiqua', Baskerville, Georgia, Times, 'Times New Roman', serif
+  font-size: 100%
+  line-height: 1.5em
   margin: 8px 16px
 
 h1, h2, h3, h4, h5, h6
@@ -64,6 +64,7 @@ code, tt
 
 pre
   margin-left: 1.5em
+  line-height: 1.75em
 
 pre.source
   counter-reset: line
@@ -117,8 +118,10 @@ li
 article, aside, dialog, figure, footer, header, hgroup, menu, nav, section
   display: block
 
-section.posts article
-  margin-bottom: 0.5em
+section.posts article time,
+article header p
+  font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
+  font-size: 95%
 
 ul.projects li
   margin-bottom: 0.25em
@@ -131,6 +134,7 @@ a.userscript
 
 body > header
   display: block
+  font-size: 95%
   >
     hgroup
       display: inline-block
@@ -199,6 +203,7 @@ body > header
       a
         +hover_link
     ul.links
+      font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif
       list-style: none
       display: inline-block
       position: absolute
@@ -232,6 +237,12 @@ body > header
         background-image: url('{% asset /images/link-github.png %}')
       li.stackoverflow span.name
         background-image: url('{% asset /images/link-stackoverflow.png %}')
+
+// Disqus overrides
+#dsq-content
+  font-size: 95% !important // default: font-size: 12px
+  .dsq-request-user-name small
+    font-size: 65% !important // default: 9px
 
 /* iPhone */
 @media only screen and (max-device-width: 480px)
