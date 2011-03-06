@@ -243,6 +243,24 @@ body > header
   font-size: 95% !important // default: font-size: 12px
   .dsq-request-user-name small
     font-size: 65% !important // default: 9px
+  a.dsq-commenter-name:hover
+    text-decoration: underline
+  #dsq-subscribe
+    font-size: 80%
+    &:before
+      content: 'Comment thread:'
+      float: left
+      color: #444
+      padding-right: 1em
+  .dsq-comment-meta a, .dsq-comment-actions a
+    color: #888
+    opacity: 1
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+  .dsq-comment:hover
+    .dsq-comment-meta a, .dsq-comment-actions a
+      text-decoration: underline
 
 /* iPhone */
 @media only screen and (max-device-width: 480px)
