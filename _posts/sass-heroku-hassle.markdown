@@ -9,7 +9,9 @@ updated: 2011-01-08
 A little while ago [Lucas Willett](http://developingego.com/) and I hacked together [Compass, Rails 3 and Heroku without a Hassle](http://til.developingego.com/post/1266966478/compass-rails-3-and-heroku-without-a-hassle). This is a combination of three components:
 
 1. Render compiled CSS to `tmp/stylesheets/` instead of `public/stylesheets/` as the file system is [read only](http://docs.heroku.com/constraints#read-only-filesystem) on Heroku.
+
 2. Use `Rack::Static` to mount `tmp/stylesheets` on `/stylesheets` so they're accessible via their original URL.
+
 3. Monkey patch [`ActionView::Helpers::AssetTagHelper`](http://api.rubyonrails.org/classes/ActionView/Helpers/AssetTagHelper.html) to check `tmp/stylesheets/` for stylesheets in addition to the default of `public/stylesheets/`. This is to ensure cache busting continues to function and you don't unintentionally serve old stylesheets to your users.
 
 The whole reason this workaround came about was that we had some trouble in getting Hassle to work. The problem was around initialisation which wasn't hard to solve in retrospect but I had the hair-brained idea to write the quick workaround above. It worked. The cache busting was an added bonus (of which I would have needed anyway).
