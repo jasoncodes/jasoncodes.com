@@ -185,7 +185,7 @@ Server: Apache/2.2.15 (Unix) mod_ssl/2.2.15 OpenSSL/0.9.8l DAV/2 Phusion_Passeng
 `mod_deflate` is loaded by default but it's not configured to compress any responses automatically. Save the following as `/etc/apache2/other/deflate.conf` to enable HTTP compression for HTML, CSS, Javascript and fonts:
 
 {% highlight apache %}
-AddOutputFilterByType DEFLATE text/html text/plain text/xml font/ttf font/otf application/vnd.ms-fontobject text/css application/javascript
+AddOutputFilterByType DEFLATE text/html text/plain text/xml font/ttf font/otf application/vnd.ms-fontobject text/css application/javascript application/atom+xml
 {% endhighlight %}
 
 ## Virtual Hosts [apache-vhosts]
