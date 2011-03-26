@@ -52,8 +52,8 @@ then
 fi
 
 echo "Reversing the polarity..."
-sudo launchctl unload -w /Library/LaunchAgents/org.apache.tomcat.plist || echo "It's dead Jim."
-sudo launchctl load -w /Library/LaunchAgents/org.apache.tomcat.plist || echo "I can't revive it."
+sudo launchctl unload -w /Library/LaunchDaemons/org.apache.tomcat.plist || echo "It's dead Jim."
+sudo launchctl load -w /Library/LaunchDaemons/org.apache.tomcat.plist || echo "I can't revive it."
 
 if ! curl --connect-timeout 5 --max-time 5 --silent localhost:8080 > /dev/null
 then

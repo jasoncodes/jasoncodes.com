@@ -58,8 +58,8 @@ sudo -u tomcat ln -sf /usr/local/Cellar/tomcat/7.0.8/libexec /usr/local/tomcat/
 And then restart the service:
 
 {% highlight bash %}
-sudo launchctl unload -w /Library/LaunchAgents/org.apache.tomcat.plist
-sudo launchctl load -w /Library/LaunchAgents/org.apache.tomcat.plist
+sudo launchctl unload -w /Library/LaunchDaemons/org.apache.tomcat.plist
+sudo launchctl load -w /Library/LaunchDaemons/org.apache.tomcat.plist
 {% endhighlight %}
 
 If all goes well, remove the old version (via the API to workaround the `brew` limitation with multiple versions):

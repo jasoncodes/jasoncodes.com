@@ -3,12 +3,14 @@ layout: post
 title: Hosting Rails apps on a Mac OS X server
 short: hostmac
 date: 2011-02-07
-updated: 2011-02-12
+updated: 2011-03-26
 ---
 
 There are many guides for setting up Rails development environments on various platforms including Mac OS and Ubuntu. I thought I'd mix it up a little with my complete guide on setting up a production Mac OS server.
 
 **Update 2011-02-12**: Added a note to the [backups](#backups) section on excluding large changing files (such as databases) from Time Machine backups.
+
+**Update 2011-03-26** All launchd configuration files for services should be placed in `LaunchDaemons` not `LaunchAgents` to run at startup as the correct user account. `LaunchAgents` are for interactive processes ran under as the logged in console user.
 
 # Contents
 
@@ -505,12 +507,12 @@ sudo adduser postgres
 # initialize the database cluster
 sudo -u postgres initdb -A ident /usr/local/var/postgres
 # set PostgreSQL to run at startup
-sudo cp /usr/local/Cellar/postgresql/9.0.1/org.postgresql.postgres.plist /Library/LaunchAgents/
-sudo defaults write /Library/LaunchAgents/org.postgresql.postgres UserName postgres
-sudo plutil -convert xml1 /Library/LaunchAgents/org.postgresql.postgres.plist
-sudo chmod 644 /Library/LaunchAgents/org.postgresql.postgres.plist
+sudo cp /usr/local/Cellar/postgresql/9.0.1/org.postgresql.postgres.plist /Library/LaunchDaemons/
+sudo defaults write /Library/LaunchDaemons/org.postgresql.postgres UserName postgres
+sudo plutil -convert xml1 /Library/LaunchDaemons/org.postgresql.postgres.plist
+sudo chmod 644 /Library/LaunchDaemons/org.postgresql.postgres.plist
 # start the server
-sudo launchctl load -w /Library/LaunchAgents/org.postgresql.postgres.plist
+sudo launchctl load -w /Library/LaunchDaemons/org.postgresql.postgres.plist
 {% endhighlight %}
 
 Add yourself as a superuser on the cluster so you can manage it without `sudo -u postgres`:
@@ -553,8 +555,8 @@ sysctl -a | egrep '^kern.sysv.shm(max|all)' | /usr/bin/sed 's/: /=/' | sudo tee 
 To restart the server run the following:
 
 {% highlight bash %}
-sudo launchctl unload -w /Library/LaunchAgents/org.postgresql.postgres.plist
-sudo launchctl load -w /Library/LaunchAgents/org.postgresql.postgres.plist
+sudo launchctl unload -w /Library/LaunchDaemons/org.postgresql.postgres.plist
+sudo launchctl load -w /Library/LaunchDaemons/org.postgresql.postgres.plist
 {% endhighlight %}
 
 Finally type `psql` and you should drop straight into a PostgreSQL prompt.
@@ -581,12 +583,12 @@ GRANT ALL ON ALL TABLES IN SCHEMA public TO $user;
 brew install memcached
 # configure to run at startup
 sudo adduser memcache
-sudo cp /usr/local/Cellar/memcached/1.4.5/com.danga.memcached.plist /Library/LaunchAgents/
-sudo defaults write /Library/LaunchAgents/com.danga.memcached UserName memcache
-sudo plutil -convert xml1 /Library/LaunchAgents/com.danga.memcached.plist
-sudo chmod 644 /Library/LaunchAgents/com.danga.memcached.plist
+sudo cp /usr/local/Cellar/memcached/1.4.5/com.danga.memcached.plist /Library/LaunchDaemons/
+sudo defaults write /Library/LaunchDaemons/com.danga.memcached UserName memcache
+sudo plutil -convert xml1 /Library/LaunchDaemons/com.danga.memcached.plist
+sudo chmod 644 /Library/LaunchDaemons/com.danga.memcached.plist
 # start the service
-sudo launchctl load -w /Library/LaunchAgents/com.danga.memcached.plist
+sudo launchctl load -w /Library/LaunchDaemons/com.danga.memcached.plist
 {% endhighlight %}
 
 Memcached defaults to a maximum cache size of 64 MB. You can increase this if needed with by adding `-m`, `128` to `ProgramArguments` in the launchd plist and restarting the service.
@@ -650,7 +652,7 @@ I recommend editing `/usr/local/tomcat/conf/server.xml` and replacing all `<Conn
 
 ## Run at startup [tomcat-startup]
 
-Save the following as `/Library/LaunchAgents/org.apache.tomcat.plist` to have launchd start Tomcat automatically:
+Save the following as `/Library/LaunchDaemons/org.apache.tomcat.plist` to have launchd start Tomcat automatically:
 
 Note: Adjust `-Xmx2048M` to control how much memory Tomcat can use.
 
@@ -690,7 +692,7 @@ Note: Adjust `-Xmx2048M` to control how much memory Tomcat can use.
 Finally, start Tomcat with the following:
 
 {% highlight bash %}
-sudo launchctl load -w /Library/LaunchAgents/org.apache.tomcat.plist
+sudo launchctl load -w /Library/LaunchDaemons/org.apache.tomcat.plist
 {% endhighlight %}
 
 To upgrade Tomcat to a newer version in the future, see my [Upgrading Tomcat with Homebrew](/posts/homebrew-tomcat-upgrade) post.
