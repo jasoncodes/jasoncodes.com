@@ -11,9 +11,9 @@ Let's say you want your app to have URLs like GitHub's: `https://github.com/mojo
 
 * Repositories are namespaced under accounts. As all repository URLs contain the account name, repository names need only be unique within a single account.
 
-* No controller or model names in the URL. A URL such as `https://github.com/accounts/mojombo/repositories/jekyll` would be overly verbose and would add no value.
+* There are no controller or model names in the URL. A URL such as `https://github.com/accounts/mojombo/repositories/jekyll` would be overly verbose and would add no value.
 
-* Services like GitHub and Twitter allow you to rename accounts but unfortunately this breaks all existing links. Out of the box Rails URLs contains numeric IDs which are immutable but aren't overly user friendly. By keeping track of history we can prevent links from breaking when slugs change. I have used [FriendlyId](https://github.com/norman/friendly_id) in production to solve this problem with great success.
+* Services like GitHub and Twitter allow you to rename accounts. Unfortunately, doing so breaks all existing external links. Out of the box Rails URLs contains numeric IDs which are immutable but aren't overly user friendly. By keeping track of history we can prevent links from breaking when slugs change. [FriendlyId](https://github.com/norman/friendly_id) solves this problem perfectly.
 
 There are a couple of ways to implement URLs like GitHub's in Rails. One way is with a bunch of custom routes. This can easily result in a complex routes configuration file, especially if we nested further resources underneath repositories (such as issues or wiki pages). Care would also need to be taken for route helpers to have decent names.
 
@@ -74,7 +74,7 @@ And then run the migrations with `rake db:migrate`.
 
 ## Controllers and initial routes [controllers]
 
-Now that our test models are ready, lets add an initial set of routes to `config/routes.rb`:
+Now that our test models are ready, let's add an initial set of routes to `config/routes.rb`:
 
 {% highlight ruby %}
 Example::Application.routes.draw do
@@ -101,7 +101,7 @@ We now have URLs of the classic `https://example.com/accounts/3141/projects/5926
 
 # Replacing numeric IDs in URLs with slugs [friendly_id]
 
-Revealing our surrogate primary keys in user visible URLs is not overly pretty. Usually there is a name field or other suitable text identifier which we could use. Such fields are rarely suitable for use directly in a URL and are often not unique nor immutable. Luckily for us, there's [FriendlyId](https://github.com/norman/friendly_id) which normalises our name fields and ensures they are unique by adding a sequence number if required. With FriendlyId, we can easily turn URLs from `https://example.com/accounts/3141/projects/59265` into `https://example.com/accounts/foocorp/projects/widgets`.
+Revealing our surrogate primary keys in user visible URLs is not overly pretty. Usually there is a name field or other suitable text identifier which we could use. Name fields are rarely suitable for use directly in a URL as they typically contain unsafe characters and are often not unique nor immutable. Luckily for us, there's [FriendlyId](https://github.com/norman/friendly_id) which normalises our name fields and ensures they are unique by adding a sequence number if required. With FriendlyId, we can easily turn URLs from `https://example.com/accounts/3141/projects/59265` into `https://example.com/accounts/foocorp/projects/widgets`.
 
 Add `friendly_id` to the `Gemfile` and run `bundle`:
 
@@ -109,7 +109,7 @@ Add `friendly_id` to the `Gemfile` and run `bundle`:
 gem 'friendly_id', '~> 3.2'
 {% endhighlight %}
 
-Create the slugs table. This is where FriendlyId stores information on all current and previous slugs to allow existing URLs to continue to function even if we rename an account or project.
+Next, create the slugs table. This is where FriendlyId stores information on all current and previous slugs to allow existing URLs to continue to function even if we rename an account or project.
 
 In a production app you should [301 redirect any old slugs to the latest slug](http://norman.github.com/friendly_id/file.Guide.html#redirecting_to_the_current_friendly_url) by checking `resource.friendly_id_status.best?` in a `before_filter`. This will prevent search engines from seeing the same content at different URLs.
 
@@ -124,7 +124,7 @@ rails generate migration add_cached_slug_to_accounts cached_slug:string
 rails generate migration add_cached_slug_to_projects cached_slug:string
 {% endhighlight %}
 
-This field will also be preferred for lookups and thus should be indexed together with any parent scope ID.
+The `cached_slug` fields will also be preferred for lookups and thus should be indexed together with any parent scope ID.
 Ensure you add the relevant indexes to the migration.
 
 {% highlight ruby hl_lines=4,15 %}
@@ -289,14 +289,14 @@ end
 
 ## A small problem [problem]
 
-Unfortunately this does not work quite to plan. If you run the specs you'll see the member actions on the parent resource are not working. Viewing the output of `rake routes` confirms why:
+Unfortunately this does not work quite to plan. If you run the specs, you'll see the member actions on the parent resource are not working. Viewing the output of `rake routes` confirms why:
 
 {% highlight text %}
 account_project GET    /:account_id/:id(.:format)      {:action=>"show", :controller=>"projects"}
    edit_account GET    /:id/edit(.:format)             {:action=>"edit", :controller=>"accounts"}
 {% endhighlight %}
 
-The nested show route is outputted first and catches all member actions on the parent. If you take a look at `resources` in  [`action_dispatch/routing/mapper.rb`](https://github.com/rails/rails/blob/v3.0.5/actionpack/lib/action_dispatch/routing/mapper.rb#L1003), you'll see that the child block is yielded before any of the resources own routes are outputted.
+The nested show route is outputted first and catches all member actions on the parent. If you take a look the implementation of `resources` in  [`action_dispatch/routing/mapper.rb`](https://github.com/rails/rails/blob/v3.0.5/actionpack/lib/action_dispatch/routing/mapper.rb#L1003), you'll see that the child block is `yield`ed before any of the resources own routes are outputted.
 
 ## An easy solution [solution]
 
