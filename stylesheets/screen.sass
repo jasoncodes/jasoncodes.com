@@ -29,7 +29,7 @@ h1, h2, h3, h4, h5, h6
     margin-top: 0
 
 a.section_anchor
-  display: none
+  visibility: hidden
   margin-left: 0.5em
   font-size: 80%
   position: relative
@@ -38,7 +38,7 @@ a.section_anchor
     content: "\00B6"
 h1, h2, h3, h4, h5, h6
   &:hover a.section_anchor
-    display: inline
+    visibility: visible
     color: #ccc
     text-decoration: none
     &:hover
