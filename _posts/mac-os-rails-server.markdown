@@ -182,7 +182,7 @@ $ curl -sI localhost | grep ^Server
 Server: Apache/2.2.15 (Unix) mod_ssl/2.2.15 OpenSSL/0.9.8l DAV/2 Phusion_Passenger/3.0.2
 {% endhighlight %}
 
-## HTTP Compression
+## HTTP Compression [compression]
 
 `mod_deflate` is loaded by default but it's not configured to compress any responses automatically. Save the following as `/etc/apache2/other/deflate.conf` to enable HTTP compression for HTML, CSS, Javascript and fonts:
 
