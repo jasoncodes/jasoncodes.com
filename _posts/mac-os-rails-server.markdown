@@ -104,11 +104,17 @@ We prepend the RVM loader to `/etc/bashrc` so it runs on non-interactive shells 
 
 {% highlight bash %}
 sudo rvm package install readline
-brew install libyaml
-sudo rvm install 1.9.2 --with-readline-dir=$rvm_path/usr --with-libyaml-dir=/usr/local
+sudo rvm install 1.9.2 --with-readline-dir=$rvm_path/usr
 sudo rvm --default 1.9.2
 rvm default
 {% endhighlight %}
+
+**Update**: These instructions originally installed `libyaml` for the Psych YAML parser on Ruby 1.9.2.
+Unfortunately Ruby 1.9.2 up to and including p180 has an issue with Psych where by it fails with merge keys.
+This can cause problems with certain versions of Bundler and RubyGems, as well as DRY database.yml files.
+The issue is [fixed in Ruby HEAD](http://redmine.ruby-lang.org/issues/show/4300)
+and there's a now somewhat stale ticket open to [backport to 1.9.2](http://redmine.ruby-lang.org/issues/show/4357).
+Hopefully we see a fix in the next Ruby 1.9.2 patch release.
 
 ## Fix Homebrew permissions broken by installing RVM system-wide [rvm-homebrew-permissions]
 
