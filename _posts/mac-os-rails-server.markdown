@@ -93,9 +93,9 @@ If you haven't already, have a quick read of [Installing RVM System Wide](http:/
 ## Install RVM [rvm]
 
 {% highlight bash %}
-sudo bash < <( curl -sL http://bit.ly/rvm-install-system-wide )
-echo -e "[[ -s '/usr/local/lib/rvm' ]] && source '/usr/local/lib/rvm'\n" | sudo bash -c 'cat - /etc/bashrc > /etc/bashrc.new && mv /etc/bashrc{.new,}' # add RVM to global shell config
-source '/usr/local/lib/rvm' # load RVM in current session
+sudo bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
+echo -e "[[ -s '/usr/local/rvm/scripts/rvm' ]] && source '/usr/local/rvm/scripts/rvm'\n" | sudo bash -c 'cat - /etc/bashrc > /etc/bashrc.new && mv /etc/bashrc{.new,}' # add RVM to global shell config
+source '/usr/local/rvm/scripts/rvm' # load RVM in current session
 {% endhighlight %}
 
 We prepend the RVM loader to `/etc/bashrc` so it runs on non-interactive shells such as cron. This in combination with [`/bin/bash -l -c`](http://blog.scoutapp.com/articles/2010/09/07/rvm-and-cron-in-production) (which is automatically provided by the [whenever](https://github.com/javan/whenever) gem), we can have the RVM provided Ruby 1.9.2 available in cron jobs.
