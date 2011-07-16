@@ -122,6 +122,16 @@ As a result, I have re-added `libyaml` to the Ruby installation instructions.
 If you're upgrading you'll need to update RVM with `rvm get head && rvm reload` first.
 To migrate a gemset over to the latest Ruby, run `rvm gemset copy 1.9.2-p{180,290}@example && rvm 1.9.2-p180 gemset delete example`.
 
+## Lockdown RVM installation [rvm-lockdown]
+
+By default RVM will give all users access to modify RVM rubies, gemsets, et al.
+This is problem as the RVM install is system wide and users should not be able to mess with the environment of others.
+Luckily, all we need to do is empty out the `rvm` group which will leave `root` as the only user allowed to administer  RVM:
+
+{% highlight bash %}
+sudo dscl . delete /Groups/rvm GroupMembership
+{% endhighlight %}
+
 ## Fix Homebrew permissions broken by installing RVM system-wide [rvm-homebrew-permissions]
 
 After installing RVM system-wide you may find `/usr/local/lib` and `/usr/local/bin` to be locked down. We can liberate them again without reinstalling Homebrew by coping the owner and permissions from another directory (such as `/usr/local/share/man`) which is unaffected by the installation of RVM.
