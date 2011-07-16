@@ -88,8 +88,6 @@ You'll need to `sudo htop` when running htop in order to see all process informa
 
 # Ruby 1.9.2 via system-wide RVM [ruby]
 
-If you haven't already, have a quick read of [Installing RVM System Wide](http://rvm.beginrescueend.com/deployment/system-wide/) in the RVM documentation to see differences between a normal and system-wide RVM install.
-
 ## Install RVM [rvm]
 
 {% highlight bash %}
