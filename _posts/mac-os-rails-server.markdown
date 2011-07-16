@@ -3,7 +3,7 @@ layout: post
 title: Hosting Rails apps on a Mac OS X server
 short: hostmac
 date: 2011-02-07
-updated: 2011-03-26
+updated: 2011-07-16
 ---
 
 There are many guides for setting up Rails development environments on various platforms including Mac OS and Ubuntu. I thought I'd mix it up a little with my complete guide on setting up a production Mac OS server.
@@ -104,17 +104,23 @@ We prepend the RVM loader to `/etc/bashrc` so it runs on non-interactive shells 
 
 {% highlight bash %}
 sudo rvm package install readline
-sudo rvm install 1.9.2 --with-readline-dir=$rvm_path/usr
+brew install libyaml
+sudo rvm install 1.9.2 --with-readline-dir=$rvm_path/usr --with-libyaml-dir=/usr/local
 sudo rvm --default 1.9.2
 rvm default
 {% endhighlight %}
 
-**Update**: These instructions originally installed `libyaml` for the Psych YAML parser on Ruby 1.9.2.
+**Update 2011-04-29**: These instructions originally installed `libyaml` for the Psych YAML parser on Ruby 1.9.2.
 Unfortunately Ruby 1.9.2 up to and including p180 has an issue with Psych where by it fails with merge keys.
 This can cause problems with certain versions of Bundler and RubyGems, as well as DRY database.yml files.
 The issue is [fixed in Ruby HEAD](http://redmine.ruby-lang.org/issues/show/4300)
 and there's a now somewhat stale ticket open to [backport to 1.9.2](http://redmine.ruby-lang.org/issues/show/4357).
 Hopefully we see a fix in the next Ruby 1.9.2 patch release.
+
+**Update 2011-07-16**: Ruby 1.9.2 p290 was released today and includes the Psych fix for YAML merge keys.
+As a result, I have re-added `libyaml` to the Ruby installation instructions.
+If you're upgrading you'll need to update RVM with `rvm get head && rvm reload` first.
+To migrate a gemset over to the latest Ruby, run `rvm gemset copy 1.9.2-p{180,290}@example && rvm 1.9.2-p180 gemset delete example`.
 
 ## Fix Homebrew permissions broken by installing RVM system-wide [rvm-homebrew-permissions]
 
