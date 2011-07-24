@@ -101,7 +101,7 @@ We prepend the RVM loader to `/etc/bashrc` so it runs on non-interactive shells 
 ## Install Ruby 1.9.2 and set it as default [rvm-ruby]
 
 {% highlight bash %}
-sudo rvm package install readline
+sudo rvm pkg install readline
 brew install libyaml
 sudo rvm install 1.9.2 --with-readline-dir=$rvm_path/usr --with-libyaml-dir=/usr/local
 sudo rvm --default 1.9.2
