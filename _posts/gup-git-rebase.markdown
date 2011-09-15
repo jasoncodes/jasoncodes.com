@@ -12,7 +12,7 @@ If one is using `git pull`, the rebasing can be accomplished by using `git pull 
 
 There's still the inconvenience of having to stash any uncommitted changes before a rebase. If you don't, you'll get messages like "refusing to pull with rebase: your working tree is not up-to-date". This results in a fetch, stash, rebase, pop dance which gets tiring. I think we can do better.
 
-**Update:** Another thing to watch out for when using `git pull --rebase` is merge commits. You cannot preserve merges when rebasing using `git pull` as it does not let you pass in the `--preserve-merges` option. This means you could end up losing valuable merge commits. Glen Maddern has a great post on [Rebasing Merge Commits in Git](http://notes.envato.com/developers/rebasing-merge-commits-in-git/) over on the [Envato Notes](http://notes.envato.com/) blog which covers this in more detail. The good news is that my `gup` script already handles rebasing merge commits by passing the `-p` (`--preserve-merges`) option to `git rebase`.
+**Update 2011-01-11:** Another thing to watch out for when using `git pull --rebase` is merge commits. You cannot preserve merges when rebasing using `git pull` as it does not let you pass in the `--preserve-merges` option. This means you could end up losing valuable merge commits. Glen Maddern has a great post on [Rebasing Merge Commits in Git](http://notes.envato.com/developers/rebasing-merge-commits-in-git/) over on the [Envato Notes](http://notes.envato.com/) blog which covers this in more detail. The good news is that my `gup` script already handles rebasing merge commits by passing the `-p` (`--preserve-merges`) option to `git rebase`.
 
 {% highlight bash %}
 function gup
