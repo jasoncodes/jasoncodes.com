@@ -38,7 +38,7 @@ function gup
     # if we're behind upstream, we need to update
     if git status | grep "# Your branch" > "$TEMPFILE"
     then
-  
+
       # extract tracking branch from message
       UPSTREAM=$(cat "$TEMPFILE" | cut -d "'" -f 2)
       if [ -z "$UPSTREAM" ]
@@ -46,21 +46,21 @@ function gup
         echo Could not detect upstream branch >&2
         exit 1
       fi
-  
+
       # stash any uncommitted changes
       git stash | tee "$TEMPFILE"
       [ "${PIPESTATUS[0]}" -eq 0 ] || exit 1
-  
+
       # take note if anything was stashed
       HAVE_STASH=0
       grep -q "No local changes" "$TEMPFILE" || HAVE_STASH=1
-  
+
       # rebase our changes on top of upstream, but keep any merges
       git rebase -p "$UPSTREAM"
-  
+
       # restore any stashed changed
       [ "$HAVE_STASH" -ne 0 ] && git stash pop -q
-  
+
     fi
 
   )
