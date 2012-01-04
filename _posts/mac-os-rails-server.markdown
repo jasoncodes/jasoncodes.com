@@ -3,7 +3,7 @@ layout: post
 title: Hosting Rails apps on a Mac OS X server
 short: hostmac
 date: 2011-02-07
-updated: 2011-07-16
+updated: 2012-01-04
 ---
 
 There are many guides for setting up Rails development environments on various platforms including Mac OS and Ubuntu. I thought I'd mix it up a little with my complete guide on setting up a production Mac OS server.
@@ -11,6 +11,8 @@ There are many guides for setting up Rails development environments on various p
 **Update 2011-02-12**: Added a note to the [backups](#backups) section on excluding large changing files (such as databases) from Time Machine backups.
 
 **Update 2011-03-26** All launchd configuration files for services should be placed in `LaunchDaemons` not `LaunchAgents` to run at startup as the correct user account. `LaunchAgents` are for interactive processes ran under as the logged in console user.
+
+**Update 2012-01-04** Added load average and file system monitoring to the example [Monit](#monit) configuration.
 
 # Contents
 
@@ -799,6 +801,13 @@ set mail-format { from: root@server.example.com }
 set alert root@server.example.com
 set mailserver localhost
 set httpd port 2812 allow localhost
+
+check system server
+  if loadavg (1min) > 8 then alert
+  if loadavg (5min) > 6 then alert
+
+check filesystem rootfs with path /
+  if space usage > 90 % then alert
 
 check process apache2 with pidfile /var/run/httpd.pid
   if failed URL http://localhost:80/ with timeout 5 seconds then alert
