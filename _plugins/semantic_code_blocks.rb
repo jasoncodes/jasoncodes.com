@@ -15,6 +15,9 @@ class Albino
     # wrap each line in <code/> so we can style them easier
     html.gsub!(/^.*$/, '<code>\0</code>')
 
+    # insert newline into empty <code/> lines to ensure blank lines copy into clipboard
+    html.gsub!(%r[^(<code>)(</code>)$], "\\1\n\\2")
+
     # convert <span class="hll"/> into <strong/> and add styling hook to <code/>
     html.gsub! %r[^<code><span class="hll">(.*)</span></code>$], '<code class="hll"><strong>\1</strong></code>'
 
