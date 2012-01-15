@@ -790,7 +790,7 @@ Check out the [documentation](http://mmonit.com/monit/documentation/monit.html) 
 First thing is to install `monit`. You'll need at least 5.2.3 as earlier versions are prone to crash on Mac OS. If you're using [my Homebrew fork](#homebrew), you're all good to go.
 
 {% highlight bash %}
-sudo brew install monit
+brew install monit
 {% endhighlight %}
 
 Create `/etc/monitrc`:
