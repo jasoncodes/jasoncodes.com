@@ -2,7 +2,6 @@ require 'active_support'
 require 'active_support/core_ext/module/aliasing'
 
 module Jekyll
-
   class Site
     attr_accessor :current_page
   end
@@ -95,18 +94,20 @@ module Jekyll
     def path_prefix
       "stylesheets/"
     end
-    
+
     def extensions
       %w(.css .sass .scss)
     end
-    
+
     def calculate_timestamp(context)
       super
+
       # find the page this tag is being rendered in
       site = context.registers[:site]
       page = site.pages.detect do |p|
         @local_path == p.instance_eval { File.join(@base, @dir, @name) }
       end
+
       # if we have a page object (i.e. we are dynamically renderered)
       if page
         # render the page if it isn't already rendered
@@ -114,13 +115,15 @@ module Jekyll
           page = page.clone # we need a clone as rendering isn't idempotent
           page.render site.layouts, site.site_payload
         end
+
         # extract timestamps out of rendered page
         asset_timestamps = page.output.scan(%r[url\(["'][^"']+\?(\d+)["']\)]).map(&:first).map(&:to_i)
+
         # pick the latest timestamp
         @timestamp = ([@timestamp] + asset_timestamps).max
       end
     end
-    
+
     def render_tag
       %Q{<link rel="stylesheet" type="text/css" href="#{@remote_path.gsub(/\.\S+$/,'')}.css#{suffix}"#{@extra || ' media="screen"'}/>}
     end
@@ -130,11 +133,11 @@ module Jekyll
     def path_prefix
       "images/"
     end
-    
+
     def extensions
       %w(.png .jpg .jpeg)
     end
-    
+
     def render_tag
       %Q{<img src="#{@remote_path}#{suffix}"#{@extra}/>}
     end
@@ -144,16 +147,15 @@ module Jekyll
     def path_prefix
       "javascripts/"
     end
-    
+
     def extensions
       %w(.js)
     end
-    
+
     def render_tag
       %Q{<script src="#{@remote_path}#{suffix}"#{@extra.rstrip}></script>}
     end
   end
-
 end
 
 Liquid::Template.register_tag('asset', Jekyll::AssetTag)

@@ -2,7 +2,6 @@ require 'active_support'
 require 'active_support/core_ext/module/aliasing'
 
 # convert `## Foo Bar [example]` to `<h2 id="example">Foo Bar</h2>`
-
 class Jekyll::MarkdownConverter
   def convert_with_header_anchors(content)
     html = convert_without_header_anchors(content)
