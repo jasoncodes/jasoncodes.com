@@ -32,6 +32,7 @@ The client certificate expires after a year so you'll have to create a new one w
 ## Requesting a server certificate
 
 Validations Wizard: Domain Name Validation
+
 Certificates Wizard: Web Server SSL/TLS Certificate
 
     openssl req -new -newkey rsa:4096 -days 365 -nodes -keyout example.com.key -out example.com.csr
