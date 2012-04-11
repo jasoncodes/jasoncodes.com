@@ -34,7 +34,7 @@ function gup
     # fetch upstream changes
     git fetch
 
-    BRANCH=$(git describe --contains --all HEAD)
+    BRANCH=$(basename $(git symbolic-ref -q HEAD))
     if [ -z "$(git config branch.$BRANCH.remote)" -o -z "$(git config branch.$BRANCH.merge)" ]
     then
       echo "\"$BRANCH\" is not a tracking branch." >&2
