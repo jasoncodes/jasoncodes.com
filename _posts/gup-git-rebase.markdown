@@ -16,7 +16,7 @@ There's still the inconvenience of having to stash any uncommitted changes befor
 
 **Update 2011-09-16:** My `gup` function has had a number of tweaks since I first posted. I removed the quiet flag from `git stash pop` as late versions of `git` seem to silence the error when pop fails. The other significant change is that `gup` will now explicitly fast-forward if it can rather than rebasing. The rest of the changes are minor (e.g. refactoring for style).
 
-**Update 2011-09-16:** I now prefer [`git-up`](https://github.com/aanand/git-up) when available as it has nicer output and it also has an option to show if one needs to `bundle`. I still use the `gup` function as it's handy on foreign systems where I don't my normal Ruby setup and I like the command name better :).
+**Update 2011-09-16:** I now prefer [`git-up`](https://github.com/aanand/git-up) when available as it has nicer output and it also has an option to show if one needs to `bundle`. I still use the `gup` function as it's handy on foreign systems where I don't have my normal Ruby setup and I like the command name better :).
 
 {% highlight bash %}
 function gup
