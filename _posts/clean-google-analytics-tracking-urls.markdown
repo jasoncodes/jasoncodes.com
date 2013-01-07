@@ -18,7 +18,7 @@ Luckily Google Analytics [asynchronous tracking](http://code.google.com/apis/ana
 
 The additional code required to make this happen is one extra statement to be added to your Google Analytics tracking JavaScript:
 
-{% highlight javascript hl_lines=4-6 %}
+{% highlight javascript hl_lines=4-7 %}
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-XXXXX-X']);
 _gaq.push(['_trackPageview']);
