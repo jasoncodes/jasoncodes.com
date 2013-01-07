@@ -50,7 +50,8 @@
 		_gaq.push(['_setAccount', '{{ site.google_analytics_id }}']);
 		_gaq.push(['_trackPageview']);
 		_gaq.push(function() {
-			if (history.replaceState) history.replaceState(null, '', location.pathname + location.hash);
+			var newPath = location.pathname + location.search.replace(/[?&]utm_[^?&]+/g, "").replace(/^&/, "?") + location.hash;
+			if (history.replaceState) history.replaceState(null, '', newPath);
 		});
 		(function() {
 			if (location.host.match(/(\.local|^localhost)(:\d+)?/)) return;
