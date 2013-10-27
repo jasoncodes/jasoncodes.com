@@ -462,7 +462,7 @@ grep ^root /etc/aliases # check the replacement worked
 sudo postalias /etc/aliases
 {% endhighlight %}
 
-Set `postfix` to listen on `localhost` only. There's no need to give spam zombie's the time of day.
+Set `postfix` to listen on `localhost` only. There's no need to give spam zombies the time of day.
 
 {% highlight bash %}
 sudo postconf -e inet_interfaces=localhost
