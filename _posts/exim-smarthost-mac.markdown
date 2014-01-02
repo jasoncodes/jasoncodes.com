@@ -3,6 +3,7 @@ layout: post
 title: Installing Exim on Mac OS X
 short: exim
 date: 2013-12-31
+updated: 2014-01-02
 ---
 
 Why replace Postfix with Exim when Postfix comes pre-installed with Mac OS X?
@@ -12,6 +13,8 @@ For a long time I had been using [Postfix on my Macs](/posts/mac-os-rails-server
 My experience with Exim to date has been almost exclusively on Debian where the packagers have done a great job at making it easy to configure. `dpkg-reconfigure exim4-config` is pretty awesome. Luckily though, with a little bit of playing around and referencing the [manual](http://www.exim.org/exim-html-current/doc/html/spec_html/index.html), it’s not too hard to get Exim going on Mac OS X.
 
 Here we go. :)
+
+**Update 2014-01-02**: Added section on [Enabling IPv6 support](#ipv6)
 
 # Installing Exim [installation]
 
@@ -88,7 +91,7 @@ Add a new smarthost transport below the `remote_smtp` entry:
 smarthost:
   driver = smtp
   hosts_require_tls = *
-  hosts_require_auth = ${lookup{$host}nwildlsearch{/usr/local/etc/exim/passwd.client}{$host_address}}
+  hosts_require_auth = ${lookup{$host}nwildlsearch{/usr/local/etc/exim/passwd.client}{*}}
 {% endhighlight %}
 
 ### Authentication [authenticators]
@@ -121,6 +124,16 @@ smtp.example.net:username:password
 ### Forwarding local user accounts [forward]
 
 Create `.forward` files in the home directory of any local accounts you want to receive mail for. The file should contain a single line with the destination email address.
+
+### Enabling IPv6 support [ipv6]
+
+Exim’s IPv6 support is not enabled out of the box. If you’re interested in this, it’s fairly easy to get going.
+
+We’ll first have to edit the Homebrew formula to compile Exim with IPv6 support enabled. Run `brew edit exim` and add `s << "HAVE_IPV6=yes\n"` to the end of the `inreplace 'Local/Makefile'` block. Run `brew uninstall exim` to remove the IPv4 version and then re-run `USER=ref:exim brew install exim` to install the IPv6 enabled version.
+
+Secondly, we’ll add the IPv6 loopback address to the allowed list for relaying. Search for `relay_from_hosts` and change the value to `<; 127.0.0.1 ; ::1`.
+
+Finally, we’ll add the IPv6 loopback interface to the list of interfaces to listen to. Search for `local_interfaces` and change the value to `<; 127.0.0.1 ; ::1`.
 
 ### Syntax check config file [check]
 
