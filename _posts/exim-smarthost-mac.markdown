@@ -16,6 +16,8 @@ Here we go. :)
 
 **Update 2014-01-02**: Added section on [Enabling IPv6 support](#ipv6)
 
+**Update 2014-01-02**: Added section on [Postfix `sendmail` compatibility](#postfix-sendmail-compat)
+
 # Installing Exim [installation]
 
 ## Creating a service user account [user_account]
@@ -63,6 +65,20 @@ Exim by default denies relay attempts but it’s still good policy to not expose
 
 {% highlight text %}
 local_interfaces = 127.0.0.1
+{% endhighlight %}
+
+### Postfix `sendmail` compatibility [postfix-sendmail-compat]
+
+Exim and Postfix have different default behaviours for sendmail’s `-t` option which used by default by Rails’ (ActionMailer) sendmail delivery method. This option extracts email addresses from the message headers. When additional email addresses are supplied on the command line, Postfix adds these to the extracted set. Exim’s default is to remove any addresses specified on the command line from the extracted set. Rails expects Postfix’s behaviour. Add the following to the main configuration section (after `local_interfaces` is fine):
+
+{% highlight text %}
+extract_addresses_remove_arguments = false
+{% endhighlight %}
+
+Exim also adds a `Sender` header when using `sendmail` with a custom `From` address. One generally does not want this behaviour as the `Sender` header is often displayed in email clients. You can always tell what user account sent an email by examining the `Received` headers. Add the following to disable this behaviour:
+
+{% highlight text %}
+no_local_from_check
 {% endhighlight %}
 
 ### Routers [routers]
