@@ -2,7 +2,6 @@
 layout: post
 title: Restarting Tomcat automatically on Mac OS with Monit
 short: tomcat-monit
-date: 2011-02-14
 ---
 
 When I setup [Tomcat on Mac OS with Homebrew](/posts/mac-os-rails-server#tomcat) I also setup [Monit](/posts/mac-os-rails-server#monit) to monitor if daemons fail. What I didn't do is tell Monit how to restart Tomcat should it fail.

@@ -2,7 +2,6 @@
 layout: post
 title: A free SSL certificate for your web server
 short: startssl
-date: 2010-12-11
 ---
 
 # No more self-signed certificates

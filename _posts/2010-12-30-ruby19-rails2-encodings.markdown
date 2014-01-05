@@ -2,7 +2,6 @@
 layout: post
 title: Ruby 1.9.2 encoding issues with Rails 2.3.10
 short: utf8
-date: 2010-12-30
 ---
 
 While switching my app over from Ruby Enterprise Edition 1.8.7 to Ruby 1.9.2p0, I ran into a few issues with content encodings. The vast majority of these issues could be solved by placing `# -*- coding: utf-8 -*-` at the top of the source file. A couple of the problems I ran into ended up being a little more complex.

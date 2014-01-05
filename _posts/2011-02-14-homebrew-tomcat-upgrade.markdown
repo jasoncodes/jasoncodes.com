@@ -2,7 +2,6 @@
 layout: post
 title: Upgrading Tomcat with Homebrew
 short: tomcat
-date: 2011-02-14
 ---
 
 If you followed my guide on setting up [Tomcat on Mac OS with Homebrew](/posts/mac-os-rails-server#tomcat), at some point you may want to update Tomcat to the latest version.

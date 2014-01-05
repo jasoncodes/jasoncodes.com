@@ -2,7 +2,6 @@
 layout: post
 title: Installing Exim on Mac OS X
 short: exim
-date: 2013-12-31
 updated: 2014-01-02
 ---
 

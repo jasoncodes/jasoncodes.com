@@ -2,7 +2,6 @@
 layout: post
 title: Nested resource URLs without controller names or numeric IDs in Rails 3
 short: nested
-date: 2011-04-04
 ---
 
 Let's say you want your app to have URLs like GitHub's: `https://github.com/mojombo/jekyll`. There are a number of advantages to URLs of this form over more conventional Rails resource URLs:
