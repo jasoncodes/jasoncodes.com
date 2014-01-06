@@ -17,7 +17,7 @@ There's still the inconvenience of having to stash any uncommitted changes befor
 
 **Update 2011-09-16:** I now prefer [`git-up`](https://github.com/aanand/git-up) when available as it has nicer output and it also has an option to show if one needs to `bundle`. I still use the `gup` function as it's handy on foreign systems where I don't have my normal Ruby setup and I like the command name better :).
 
-{% highlight bash %}
+``` bash
 function gup
 {
   # subshell for `set -e` and `trap`
@@ -90,7 +90,7 @@ function gup
 
   )
 }
-{% endhighlight %}
+```
 
 Throw the following into your shell's startup script. I keep the script in my [dotfiles](https://github.com/jasoncodes/dotfiles) as it's much easier to bring it along to new machines. Alternatively you could remove the function wrapper and save it as a standalone script in `~/bin`.
 

@@ -10,13 +10,13 @@ You could stop remove the old version, install the new version, update the symli
 
 The first step is to update your local formula with the new version info by running the following:
 
-{% highlight bash %}
+``` bash
 brew edit tomcat
-{% endhighlight %}
+```
 
 Here's the change I made to move from 7.0.6 to 7.0.8:
 
-{% highlight diff %}
+``` diff
 diff --git a/Library/Formula/tomcat.rb b/Library/Formula/tomcat.rb
 index 90b3443..bded504 100644
 --- a/Library/Formula/tomcat.rb
@@ -32,37 +32,37 @@ index 90b3443..bded504 100644
 +  md5 'b18b0f1d987f82038a7afeb2e3075511'
  
    skip_clean :all
-{% endhighlight %}
+```
 
 After the formula is updated you can install the new version with:
 
-{% highlight bash %}
+``` bash
 brew install tomcat
-{% endhighlight %}
+```
 
 As per the [initial install](/posts/mac-os-rails-server#tomcat), Homebrew links the keg which results in a handful of generically named scripts being added to your path. We'll need to unlink it.
 
 If you try to unlink with `brew unlink tomcat` you'll get `Error: tomcat has multiple installed versions`. It seems the `brew` command doesn't really like multiple versions of the same formula being installed at the same time and it presently doesn't expose a way to do this other than removing the old version first. We can however unlink it by calling the Homebrew API directly:
 
-{% highlight bash %}
+``` bash
 ruby -I/usr/local/Library/Homebrew -rglobal -rkeg -e 'puts Keg.new("/usr/local/Cellar/tomcat/7.0.8").unlink'
-{% endhighlight %}
+```
 
 The next step is to switch out the `libexec` symlink:
 
-{% highlight bash %}
+``` bash
 sudo -u tomcat ln -sf /usr/local/Cellar/tomcat/7.0.8/libexec /usr/local/tomcat/
-{% endhighlight %}
+```
 
 And then restart the service:
 
-{% highlight bash %}
+``` bash
 sudo launchctl unload -w /Library/LaunchDaemons/org.apache.tomcat.plist
 sudo launchctl load -w /Library/LaunchDaemons/org.apache.tomcat.plist
-{% endhighlight %}
+```
 
 If all goes well, remove the old version (via the API to workaround the `brew` limitation with multiple versions):
 
-{% highlight bash %}
+``` bash
 ruby -I/usr/local/Library/Homebrew -rglobal -rkeg -e 'k = Keg.new("/usr/local/Cellar/tomcat/7.0.6"); puts k.unlink; k.uninstall'
-{% endhighlight %}
+```

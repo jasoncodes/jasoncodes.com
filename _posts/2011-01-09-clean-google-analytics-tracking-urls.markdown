@@ -17,7 +17,7 @@ Luckily Google Analytics [asynchronous tracking](http://code.google.com/apis/ana
 
 The additional code required to make this happen is one extra statement to be added to your Google Analytics tracking JavaScript:
 
-{% highlight javascript hl_lines=4-7 %}
+``` javascript#hl_lines=4-7
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-XXXXX-X']);
 _gaq.push(['_trackPageview']);
@@ -31,7 +31,7 @@ _gaq.push(function() {
   ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
   var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
-{% endhighlight %}
+```
 
 **Update 2011-01-26:** I originally called `replaceState` with just `location.pathname` but that resulted in the removal of anchors within a page (e.g. links to comments). The code has been updated to `location.pathname + location.hash` to keep anchors. e.g. `/foo/bar?utm_medium=example#comment-42` will now be replaced with `/foo/bar#comment-42`.
 

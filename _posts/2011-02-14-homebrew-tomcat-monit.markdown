@@ -12,7 +12,7 @@ I came up with the following shell script to restart Tomcat fully, even if the J
 
 Save the following as `/usr/local/sbin/tomcat-restart` and `chmod +x` it:
 
-{% highlight bash %}
+``` bash
 #!/bin/bash -e
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin
 
@@ -71,22 +71,22 @@ then
 fi
 
 echo Done.
-{% endhighlight %}
+```
 
 Then all we have to do is tell Monit to run this script when the service fails. My updated service entry for Tomcat in `/etc/monitrc` is as follows:
 
-{% highlight text %}
+```
 check host tomcat with address 127.0.0.1
   if failed port 8080
     send "HEAD / HTTP/1.0\r\n\r\n"
     expect "HTTP/1.1"
     with timeout 5 seconds
     then exec "/usr/local/sbin/tomcat-restart"
-{% endhighlight %}
+```
 
 Check the syntax is valid and then reload Monit:
 
-{% highlight bash %}
+``` bash
 sudo monit -t
 sudo monit reload
-{% endhighlight %}
+```

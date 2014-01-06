@@ -26,29 +26,29 @@ Note: This post is for Rails 3. For Rails 2.3, you can use [`default_routing`](h
 
 Create a new directory and setup our RVM gemset:
 
-{% highlight bash %}
+``` bash
 mkdir example
 cd example
 git init
 echo rvm --create 1.9.2@example > .rvmrc
 cd . # trigger RVM to load the rvmrc file
-{% endhighlight %}
+```
 
 Generate a new Rails 3 app without Test::Unit or Prototype. We'll use RSpec for testing and we can add [`jquery-rails`](https://github.com/indirect/jquery-rails) later when we want to add client-side scripting.
 
-{% highlight bash %}
+``` bash
 rails new . --skip-test-unit --skip-prototype
-{% endhighlight %}
+```
 
 Add [Inherited Resources](https://github.com/josevalim/inherited_resources) and [RSpec](https://github.com/rspec) to the Gemfile. We'll be using these shortly.
 
-{% highlight ruby %}
+``` ruby
 gem 'inherited_resources'
 
 group :development, :test do
   gem 'rspec-rails'
 end
-{% endhighlight %}
+```
 
 Run `bundle` to ensure all the required gems are installed.
 
@@ -56,18 +56,18 @@ Run `bundle` to ensure all the required gems are installed.
 
 Generate our model files and migrations. We'll be nesting projects underneath accounts and each model will have their own name.
 
-{% highlight bash %}
+``` bash
 rails generate model account name:string
 rails generate model project name:string account:references
-{% endhighlight %}
+```
 
 At this point we should add database constraints to the migration and validations to the model. For brevity we'll just add the `has_many` association for Account here:
 
-{% highlight ruby %}
+``` ruby
 class Account < ActiveRecord::Base
   has_many :projects
 end
-{% endhighlight %}
+```
 
 And then run the migrations with `rake db:migrate`.
 
@@ -75,17 +75,17 @@ And then run the migrations with `rake db:migrate`.
 
 Now that our test models are ready, let's add an initial set of routes to `config/routes.rb`:
 
-{% highlight ruby %}
+``` ruby
 Example::Application.routes.draw do
   resources :accounts do
     resources :projects
   end
 end
-{% endhighlight %}
+```
 
 Add a couple of controllers using Inherited Resources:
 
-{% highlight ruby %}
+``` ruby
 class AccountsController < ApplicationController
   inherit_resources
 end
@@ -94,7 +94,7 @@ class ProjectsController < ApplicationController
   inherit_resources
   belongs_to :account
 end
-{% endhighlight %}
+```
 
 We now have URLs of the classic `https://example.com/accounts/3141/projects/59265` format. At this point I have also created specs for the routes which I have omitted here for brevity. You can find these in the [controllers commit](https://github.com/jasoncodes/rails-3-nested-resource-slugs/commit/274a8f34c702afce8e22dcb532eb2c805da4df21) in the [example app repo](https://github.com/jasoncodes/rails-3-nested-resource-slugs).
 
@@ -104,29 +104,29 @@ Revealing our surrogate primary keys in user visible URLs is not overly pretty. 
 
 Add `friendly_id` to the `Gemfile` and run `bundle`:
 
-{% highlight ruby %}
+``` ruby
 gem 'friendly_id', '~> 3.2'
-{% endhighlight %}
+```
 
 Next, create the slugs table. This is where FriendlyId stores information on all current and previous slugs to allow existing URLs to continue to function even if we rename an account or project.
 
 In a production app you should [301 redirect any old slugs to the latest slug](http://norman.github.com/friendly_id/file.Guide.html#redirecting_to_the_current_friendly_url) by checking `resource.friendly_id_status.best?` in a `before_filter`. This will prevent search engines from seeing the same content at different URLs.
 
-{% highlight bash %}
+``` bash
 rails generate friendly_id
-{% endhighlight %}
+```
 
 Add a cached slug column to each model table. This is done primarily for performance reasons. This allows FriendlyId to generate URLs without having to recalculate and verify the slug every time.
 
-{% highlight bash %}
+``` bash
 rails generate migration add_cached_slug_to_accounts cached_slug:string
 rails generate migration add_cached_slug_to_projects cached_slug:string
-{% endhighlight %}
+```
 
 The `cached_slug` fields will also be preferred for lookups and thus should be indexed together with any parent scope ID.
 Ensure you add the relevant indexes to the migration.
 
-{% highlight ruby hl_lines=4,15 %}
+``` ruby#hl_lines=4,15
 class AddCachedSlugToAccounts < ActiveRecord::Migration
   def self.up
     add_column :accounts, :cached_slug, :string
@@ -148,29 +148,29 @@ class AddCachedSlugToProjects < ActiveRecord::Migration
     remove_column :projects, :cached_slug
   end
 end
-{% endhighlight %}
+```
 
 Add `has_friendly_id` to the models:
 
-{% highlight ruby %}
+``` ruby
 class Account < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true
 end
-{% endhighlight %}
+```
 
-{% highlight ruby %}
+``` ruby
 class Project < ActiveRecord::Base
   has_friendly_id :name, :use_slug => true, :scope => :account_id
 end
-{% endhighlight %}
+```
 
 Run the migrations and generate slugs for any existing records:
 
-{% highlight bash %}
+``` bash
 rake db:migrate
 rake friendly_id:make_slugs MODEL=Account
 rake friendly_id:make_slugs MODEL=Project
-{% endhighlight %}
+```
 
 # Removing the controller names from URLs [controller-names]
 
@@ -182,7 +182,7 @@ First things first, let's update the routing specs to match the URLs we are afte
 
 `spec/routing/accounts_routing_spec.rb`:
 
-{% highlight ruby %}
+``` ruby
 require 'spec_helper'
 
 describe AccountsController do
@@ -226,11 +226,11 @@ describe AccountsController do
     end
   end
 end
-{% endhighlight %}
+```
 
 `spec/routing/projects_routing_spec.rb`:
 
-{% highlight ruby %}
+``` ruby
 require 'spec_helper'
 
 describe ProjectsController do
@@ -268,7 +268,7 @@ describe ProjectsController do
     end
   end
 end
-{% endhighlight %}
+```
 
 ## Updating the routes [routes]
 
@@ -278,22 +278,22 @@ With no prefix on the nested resource routes, both the show page for accounts (`
 
 Here's the updated routes entries:
 
-{% highlight ruby %}
+``` ruby
 Example::Application.routes.draw do
   resources :accounts, :path => '' do
     resources :projects, :path => '', :except => [:index]
   end
 end
-{% endhighlight %}
+```
 
 ## A small problem [problem]
 
 Unfortunately this does not work quite to plan. If you run the specs, you'll see the member actions on the parent resource are not working. Viewing the output of `rake routes` confirms why:
 
-{% highlight text %}
+```
 account_project GET    /:account_id/:id(.:format)      {:action=>"show", :controller=>"projects"}
    edit_account GET    /:id/edit(.:format)             {:action=>"edit", :controller=>"accounts"}
-{% endhighlight %}
+```
 
 The nested show route is outputted first and catches all member actions on the parent. If you take a look the implementation of `resources` in  [`action_dispatch/routing/mapper.rb`](https://github.com/rails/rails/blob/v3.0.5/actionpack/lib/action_dispatch/routing/mapper.rb#L1003), you'll see that the child block is `yield`ed before any of the resources own routes are outputted.
 
@@ -301,13 +301,13 @@ The nested show route is outputted first and catches all member actions on the p
 
 The workaround for this is to place any nested `resources` which have empty paths (`:path => ''`) within a second parent `resources` block. This second block uses `:only => []` to prevent it from generating any routes of its own. Any `member` or `collection` blocks for `resources :accounts` (as well as any `only`/`except` constraints) can be added as normal to the first `resources :accounts` entry.
 
-{% highlight ruby %}
+``` ruby
 Example::Application.routes.draw do
   resources :accounts, :path => ''
   resources :accounts, :path => '', :only => [] do
     resources :projects, :path => '', :except => [:index]
   end
 end
-{% endhighlight %}
+```
 
 Voilà, all of the specs are now passing.

@@ -1,11 +1,16 @@
-markdown: rdiscount
+markdown: redcarpet
 pygments: true
 permalink: /posts/:title
-server_port: 4000
+port: 4000
 
 exclude:
   - Rakefile
   - bin
+
+assets:
+  js_compressor: uglifier
+  css_compressor: sass
+  cache: true
 
 title: Jason Codes
 subtitle: "code &amp; rants of Jason Weathered"

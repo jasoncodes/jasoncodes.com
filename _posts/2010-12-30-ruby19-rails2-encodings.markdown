@@ -14,7 +14,7 @@ Rails 3 solves this very nicely by doing a number of things including interpreti
 
 We can force Rails to interpret all string parameters as UTF-8 with [a small patch](https://rails.lighthouseapp.com/projects/8994/tickets/4336-ruby19-submitted-string-form-parameters-with-non-ascii-characters-cause-encoding-errors#ticket-4336-3). Save the following as `config/initializers/utf8_params.rb`:
 
-{% highlight ruby %}
+``` ruby
 raise "Check if this is still needed on " + Rails.version unless Rails.version == '2.3.10'
 
 class ActionController::Base
@@ -38,22 +38,22 @@ class ActionController::Base
   before_filter :force_utf8_params
   
 end
-{% endhighlight %}
+```
 
 ## ERB templates
 
 I was having trouble getting the old `# -*- coding: utf-8 -*-` working in ERB and I was wondering if I'd have to start looking into other options. I'd get an exception any time I outputted a string containing UTF-8 (from params or the model). Luckily I came across the following code in [`action_view/template_handlers/erb.rb`](https://github.com/rails/rails/blob/v2.3.10/actionpack/lib/action_view/template_handlers/erb.rb#L14):
 
-{% highlight ruby %}
+``` ruby
 magic = $1 if template.source =~ /\A(<%#.*coding[:=]\s*(\S+)\s*-?%>)/
 erb = "#{magic}<% __in_erb_template=true %>#{template.source}"
-{% endhighlight %}
+```
 
 It looks like Rails does support specifying the encoding of ERB templates after all. All you need to do is to add the following to the top of your template:
 
-{% highlight text %}
+```
 <%# coding: utf-8 %>
-{% endhighlight %}
+```
 
 The key part I was missing is to have no whitespace between the `<%` and `#`. Additionally, if this is in a plain text template for ActionMailer, you'll want to avoid any newlines between this block and your main content otherwise you'll have a blank line at the top of the email.
 
@@ -61,15 +61,15 @@ The key part I was missing is to have no whitespace between the `<%` and `#`. Ad
 
 I ran into a couple of encoding errors that I was having trouble reproducing locally but were highly reproducible on production (running on Apache with Passenger). It even ran fine when I booted up a `RAILS_ENV=production script/server` on the production host. This had me stumped for a few minutes until I thought to look at my environment variables. A `set | grep UTF` revealed the following:
 
-{% highlight bash %}
+``` bash
 LANG=en_AU.UTF-8
 LC_CTYPE=en_US.UTF-8
-{% endhighlight %}
+```
 
 The bugs reproduced fine once I `unset` these in my local terminal session. Ruby 1.9 can use these environment variables to set the default encoding to something other than US-ASCII. Handy once you know about it. You may want to try running your tests with these unset to see if you're missing any encoding issues.
 
 If you want Ruby to default to UTF-8 when loading files (i.e `File.read`) when these environment variables are not set, add the following to an initializer:
 
-{% highlight ruby %}
+``` ruby
 Encoding.default_external = 'UTF-8'
-{% endhighlight %}
+```

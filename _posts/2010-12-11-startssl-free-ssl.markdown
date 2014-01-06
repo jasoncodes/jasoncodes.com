@@ -52,7 +52,7 @@ Copy the `.crt`, `.key` and `.pem` files to `/etc/apache2/ssl` on your server.
 
 Run the following commands as root:
 
-{% highlight text %}
+```
 cd /etc/apache2/ssl
 mv ca.pem startssl.ca.crt
 mv sub.class1.server.ca.pem startssl.sub.class1.server.ca.crt
@@ -61,16 +61,16 @@ cat example.com.{key,crt} startssl.chain.class1.server.crt > example.com.pem
 ln -sf example.com.pem apache.pem
 chown root:ssl *.crt *.key *.pem
 chmod 640 *.key *.pem
-{% endhighlight %}
+```
 
 Edit `/etc/apache2/sites-available/ssl` and add the following within the `<VirtualHost>` block:
 
-{% highlight apache %}
+``` apache
 SSLEngine On
 SSLCertificateFile /etc/apache2/ssl/example.com.crt
 SSLCertificateKeyFile /etc/apache2/ssl/example.com.key
 SSLCertificateChainFile /etc/apache2/ssl/startssl.chain.class1.server.crt
-{% endhighlight %}
+```
 
 At this point you'll want to configure the rest of Apache for SSL if you haven't already.
 
@@ -90,15 +90,15 @@ Run the following after restarting Apache to check the certificate chain:
 
 You should see something like:
 
-{% highlight text %}
+```
 depth=2 /C=IL/O=StartCom Ltd./OU=Secure Digital Certificate Signing/CN=StartCom Certification Authority
 verify error:num=19:self signed certificate in certificate chain
 verify return:0
-{% endhighlight %}
+```
 
 A depth of 2 and a return value of 0 is good. If the certificate chain is wrong, you'll probably see something like:
 
-{% highlight text %}
+```
 depth=0 /description=12345-ABCDEF123456/C=XX/O=Persona Not Validated/OU=StartCom Free Certificate Member/CN=host.example.com/emailAddress=hostmaster@example.com
 verify error:num=20:unable to get local issuer certificate
 verify return:1
@@ -108,29 +108,29 @@ verify return:1
 depth=0 /description=12345-ABCDEF123456/C=XX/O=Persona Not Validated/OU=StartCom Free Certificate Member/CN=host.example.com/emailAddress=hostmaster@example.com
 verify error:num=21:unable to verify the first certificate
 verify return:1
-{% endhighlight %}
+```
 
 ## Hosting email services over SSL
 
 I have one host setup to send and receive email using Exim 4 for SMTP and Courier for IMAP. To have these services use your new SSL certificate, point them to your existing certificate files:
 
-{% highlight text %}
+```
 ln -sf /etc/apache2/ssl/example.com.pem /etc/courier/imapd.pem
 ln -sf /etc/apache2/ssl/example.com.pem /etc/courier/pop3d.pem
 
 ln -sf /etc/apache2/ssl/example.com.pem /etc/exim4/exim.pem
 ln -sf /etc/apache2/ssl/example.com.crt /etc/exim4/exim.crt
 ln -sf /etc/apache2/ssl/example.com.key /etc/exim4/exim.key
-{% endhighlight %}
+```
 
 Outlook and Outlook Express are both fairly broken but fortunately I found some workarounds. You'll want to set the following config option for Exim (in `/etc/exim4/conf.d/main/03_exim4-config_tlsoptions` if you are using split configuration on Debian):
 
-{% highlight bash %}
+``` bash
 # Outlook Express really sucks
 # See <http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=482012>
 MAIN_TLS_TRY_VERIFY_HOSTS=''
 
 MAIN_TLS_CERTKEY = CONFDIR/exim.pem
-{% endhighlight %}
+```
 
 Outlook does not work properly with the altname in the certificate. You may have to use the servers hostname (`host.example.com`) rather than the domain name (`example.com`).

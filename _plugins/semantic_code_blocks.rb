@@ -1,13 +1,23 @@
-require 'active_support'
-require 'active_support/core_ext/module/aliasing'
+require 'pygments'
+require 'rack/utils'
+require 'active_support/core_ext/hash/indifferent_access'
 
-class Albino
-  def colorize(options = {})
-    # disable the built in <div/> and <pre/> wrappers
-    options[:O] = "#{@options[:O]},nowrap=true"
+module Jekyll::Converters::Markdown::RedcarpetParser::WithPygments
+  remove_method :block_code
+  def block_code(code, lang)
+    options = Rack::Utils.parse_query(lang.to_s.split('#', 2)[1]).with_indifferent_access
+    lang = lang && lang.split('#').first || "text"
 
-    # call the colorizer
-    html = execute([@@bin] + convert_options(options))
+    options.merge! encoding: 'utf-8', nowrap: true
+    options[:hl_lines] = options[:hl_lines].to_s.split(',').map { |part|
+      if part =~ /\A(\d+)-(\d+)\z/
+        ($1.to_i..$2.to_i).to_a
+      else
+        part
+      end
+    }.flatten
+
+    html = Pygments.highlight(code, lexer: lang, options: options)
 
     # move whole of <span class="hll"/> onto single line
     html.gsub! %r[(<span class="hll">)([^\n]*)(\n)(</span>)], '\1\2\4\3'
@@ -22,40 +32,6 @@ class Albino
     html.gsub! %r[^<code><span class="hll">(.*)</span></code>$], '<code class="hll"><strong>\1</strong></code>'
 
     # wrap the result in a <pre/> with our desired CSS classes
-    "<pre class=\"source source-#{@options[:l]}\">#{html}</pre>"
+    "<pre class=\"source source-#{lang}\">#{html}</pre>"
   end
-  alias_method :to_s, :colorize
-
-  def convert_options(options = {})
-    @options.merge(options).inject [] do |args, (flag, value)|
-      args += ["-#{flag}", "#{value}"]
-    end
-  end
-end
-
-class Jekyll::HighlightBlock
-  def add_code_tags(code, lang)
-    code # noop
-  end
-
-  remove_const :SYNTAX
-  SYNTAX = /\A(\w+)(?:\s(.+))?\s\z/
-
-  def initialize_with_hl_lines(tag_name, markup, tokens)
-    initialize_without_hl_lines(tag_name, markup, tokens)
-
-    @options['O'].gsub!(/(hl_lines=)([0-9,-]+)/) do |match|
-      prefix = $1
-      lines = []
-      $2.split(',').each do |entry|
-        if entry =~ /\A(\d+)-(\d+)\z/
-          lines += ($1.to_i..$2.to_i).to_a
-        else
-          lines << entry
-        end
-      end
-      "#{prefix}#{lines.join ' '}"
-    end unless @options['O'].nil?
-  end
-  alias_method_chain :initialize, :hl_lines
 end

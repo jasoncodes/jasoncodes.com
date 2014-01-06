@@ -33,7 +33,7 @@ You can install this utility in one of two ways: The first is to download the sc
 
 Create a user account for Exim, brew the formula, and set file permissions for the dedicated user account:
 
-{% highlight bash %}
+``` bash
 sudo adduser exim
 USER=ref:exim brew install exim
 sudo chown root /usr/local/etc/exim.conf
@@ -42,7 +42,7 @@ sudo chown exim /usr/local/var/spool/exim
 sudo mkdir -p /usr/local/var/spool/exim
 sudo chown exim:admin /usr/local/var/spool/exim
 sudo chmod 750 /usr/local/var/spool/exim
-{% endhighlight %}
+```
 
 ### 404 Not Found [404]
 
@@ -62,23 +62,23 @@ To set the hostname which Exim uses, search for `primary_hostname` in the config
 
 Exim by default denies relay attempts but it’s still good policy to not expose services when you don’t need to. To prevent Exim from listening on all network interfaces, add the following after the `primary_hostname` entry:
 
-{% highlight text %}
+```
 local_interfaces = 127.0.0.1
-{% endhighlight %}
+```
 
 ### Postfix `sendmail` compatibility [postfix-sendmail-compat]
 
 Exim and Postfix have different default behaviours for sendmail’s `-t` option which used by default by Rails’ (ActionMailer) sendmail delivery method. This option extracts email addresses from the message headers. When additional email addresses are supplied on the command line, Postfix adds these to the extracted set. Exim’s default is to remove any addresses specified on the command line from the extracted set. Rails expects Postfix’s behaviour. Add the following to the main configuration section (after `local_interfaces` is fine):
 
-{% highlight text %}
+  ```
 extract_addresses_remove_arguments = false
-{% endhighlight %}
+```
 
 Exim also adds a `Sender` header when using `sendmail` with a custom `From` address. One generally does not want this behaviour as the `Sender` header is often displayed in email clients. You can always tell what user account sent an email by examining the `Received` headers. Add the following to disable this behaviour:
 
-{% highlight text %}
+```
 no_local_from_check
-{% endhighlight %}
+```
 
 ### Routers [routers]
 
@@ -86,13 +86,13 @@ Search for `begin routers`. This section controls how mail is routed to its dest
 
 Comment out the existing `dnslookup` router entry and add a new entry below it to route via a smarthost:
 
-{% highlight text %}
+```
 smart_route:
   driver = manualroute
   domains = !+local_domains
   transport = smarthost
   route_list = * smtp.example.net::587
-{% endhighlight %}
+```
 
 Replace `smtp.example.net` with your upstream SMTP smarthost server’s hostname.
 
@@ -102,39 +102,39 @@ Search for `begin transports`. This section controls how mail is delivered once 
 
 Add a new smarthost transport below the `remote_smtp` entry:
 
-{% highlight text %}
+```
 smarthost:
   driver = smtp
   hosts_require_tls = *
   hosts_require_auth = ${lookup{$host}nwildlsearch{/usr/local/etc/exim/passwd.client}{*}}
-{% endhighlight %}
+```
 
 ### Authentication [authenticators]
 
 Search for `begin authenticators`. This section controls where authentication credentials are retrieved from for both inbound (server) and outbound (client) connections. We're only authenticating as a client here so here's an entry to add which retrieves the username and password from our configuration file:
 
-{% highlight text %}
+```
 plain:
   driver = plaintext
   public_name = PLAIN
   client_send = "^${extract{1}{::}{${lookup{$host}lsearch*{/usr/local/etc/exim/passwd.client}{$value}fail}}}\
                  ^${extract{2}{::}{${lookup{$host}lsearch*{/usr/local/etc/exim/passwd.client}{$value}fail}}}"
-{% endhighlight %}
+```
 
 Next, we’ll create a secured password file to store the credentials for our smarthost.
 
-{% highlight bash %}
+``` bash
 sudo mkdir /usr/local/etc/exim
 sudo touch /usr/local/etc/exim/passwd.client
 sudo chmod 600 /usr/local/etc/exim/passwd.client
 sudo chown exim /usr/local/etc/exim/passwd.client
-{% endhighlight %}
+```
 
 Add a line like the following to `/usr/local/etc/exim/passwd.client`, replacing the placeholders with your smarthost’s hostname, username, and password:
 
-{% highlight text %}
+```
 smtp.example.net:username:password
-{% endhighlight %}
+```
 
 ### Forwarding local user accounts [forward]
 
@@ -160,7 +160,7 @@ If you have any other SMTP server running, you should disable it now. If you fol
 
 Create the following launchd daemon configuration file at `/Library/LaunchDaemons/exim.plist`:
 
-{% highlight xml %}
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -181,7 +181,7 @@ Create the following launchd daemon configuration file at `/Library/LaunchDaemon
   <true />
 </dict>
 </plist>
-{% endhighlight %}
+```
 
 Start the server now by running `sudo launchctl load -w /Library/LaunchDaemons/exim.plist`.
 
@@ -191,12 +191,12 @@ Run `nc -n 127.0.0.1 25 < /dev/null` and you should see a 220 banner message con
 
 UNIX services such as `cron` use sendmail rather than using SMTP to deliver mail. In order for these to work, we’ll need to swap out Postfix’s sendmail binary (`/usr/sbin/sendmail`) for Exim.
 
-{% highlight bash %}
+``` bash
 sudo mv -i /usr/sbin/sendmail{,.org}
 sudo ln -s /usr/local/bin/exim /usr/sbin/sendmail
 sudo chown root:wheel /usr/sbin/sendmail
 sudo chmod u+s /usr/sbin/sendmail
-{% endhighlight %}
+```
 
 ## Log rotation [logrotate]
 
@@ -204,7 +204,7 @@ The main log file for Exim is stored at `/usr/local/var/spool/exim/log/mainlog`.
 
 Exim comes with a tool to perform log rotation. Let’s setup a launchd schedule to rotate the logs once a day. Create `/Library/LaunchDaemons/exim-logrotate.plist` with the following:
 
-{% highlight xml %}
+``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -230,7 +230,7 @@ Exim comes with a tool to perform log rotation. Let’s setup a launchd schedule
   </dict>
 </dict>
 </plist>
-{% endhighlight %}
+```
 
 Register the log rotation job with launchctl by running `sudo launchctl load -w /Library/LaunchDaemons/exim-logrotate.plist`.
 
@@ -238,8 +238,8 @@ Register the log rotation job with launchctl by running `sudo launchctl load -w 
 
 You can test sendmail is working by sending a test message using `mail`. Assuming you setup a `.forward` file earlier for your user account, the following should send you an email:
 
-{% highlight bash %}
+``` bash
 date | mail -s Test $USER
-{% endhighlight %}
+```
 
 If you receive this test email, you’re done! Yay!
