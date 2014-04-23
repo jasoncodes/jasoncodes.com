@@ -1,3 +1,4 @@
+encoding: utf-8
 markdown: redcarpet
 pygments: true
 permalink: /posts/:title
