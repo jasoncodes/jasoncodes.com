@@ -44,7 +44,7 @@ And now we wait for certificate to be issued. This usually happens within the ha
 
 1. Toolbox > Retrieve Certificate: You will see your newly created certificate. Save it as `example.com.crt`.
 2. Toolbox > StartCom CA Certificates: Download "StartCom Root CA (PEM encoded)" ([ca.pem](https://www.startssl.com/certs/ca.pem))
-3. Toolbox > StartCom CA Certificates: Download "Class 1 Intermediate Server CA" ([sub.class1.server.ca.pem](https://www.startssl.com/certs/sub.class1.server.ca.pem))
+3. Toolbox > StartCom CA Certificates: Download "Class 1 Intermediate Server CA" ([sub.class1.server.sha2.ca.pem](https://www.startssl.com/certs/class1/sha2/pem/sub.class1.server.sha2.ca.pem))
 
 Copy the `.crt`, `.key` and `.pem` files to `/etc/apache2/ssl` on your server.
 
@@ -55,8 +55,8 @@ Run the following commands as root:
 ```
 cd /etc/apache2/ssl
 mv ca.pem startssl.ca.crt
-mv sub.class1.server.ca.pem startssl.sub.class1.server.ca.crt
-cat startssl.sub.class1.server.ca.crt startssl.ca.crt > startssl.chain.class1.server.crt
+mv sub.class1.server.sha2.ca.pem startssl.sub.class1.server.sha2.ca.crt
+cat startssl.sub.class1.server.sha2.ca.crt startssl.ca.crt > startssl.chain.class1.server.crt
 cat example.com.{key,crt} startssl.chain.class1.server.crt > example.com.pem
 ln -sf example.com.pem apache.pem
 chown root:ssl *.crt *.key *.pem
