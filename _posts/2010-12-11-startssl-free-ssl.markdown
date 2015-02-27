@@ -43,8 +43,8 @@ As of this point the `.csr` file is no longer required and can be removed. Alter
 And now we wait for certificate to be issued. This usually happens within the half hour. When you receive the certificate signing confirmation email, download the following certificates:
 
 1. Toolbox > Retrieve Certificate: You will see your newly created certificate. Save it as `example.com.crt`.
-2. Toolbox > StartCom CA Certificates: Download "StartCom Root CA (PEM encoded)" (ca.pem)
-3. Toolbox > StartCom CA Certificates: Download "Class 1 Intermediate Server CA" (sub.class1.server.ca.pem).
+2. Toolbox > StartCom CA Certificates: Download "StartCom Root CA (PEM encoded)" ([ca.pem](https://www.startssl.com/certs/ca.pem))
+3. Toolbox > StartCom CA Certificates: Download "Class 1 Intermediate Server CA" ([sub.class1.server.ca.pem](https://www.startssl.com/certs/sub.class1.server.ca.pem))
 
 Copy the `.crt`, `.key` and `.pem` files to `/etc/apache2/ssl` on your server.
 
