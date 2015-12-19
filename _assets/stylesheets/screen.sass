@@ -231,16 +231,23 @@ body > header
         background-position: 0% 50%
         margin-left: -20px
         padding-left: 20px
+        background-size: 16px 16px
       span.suffix
         display: block
         color: #ccc
         font-size: 85%
       li.twitter span.name
         background-image: image-url('link-twitter.png')
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi)
+          background-image: image-url('link-twitter@2x.png')
       li.github span.name
         background-image: image-url('link-github.png')
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi)
+          background-image: image-url('link-github@2x.png')
       li.stackoverflow span.name
         background-image: image-url('link-stackoverflow.png')
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi)
+          background-image: image-url('link-stackoverflow@2x.png')
 
 // Disqus overrides
 #dsq-content
