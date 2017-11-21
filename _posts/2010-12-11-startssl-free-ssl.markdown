@@ -2,7 +2,10 @@
 layout: post
 title: A free SSL certificate for your web server
 short: startssl
+updated: 2017-11-21
 ---
+
+**Update 2017-11-21:** StartCom will soon be [no longer be issuing certificates](https://groups.google.com/d/msg/mozilla.dev.security.policy/LM1SpKHJ-oc/4nBsP1xJAQAJ). I recommend you look into [Let's Encrypt](https://letsencrypt.org) with the [Dehydrated](https://github.com/lukas2511/dehydrated) client.
 
 # No more self-signed certificates
 
