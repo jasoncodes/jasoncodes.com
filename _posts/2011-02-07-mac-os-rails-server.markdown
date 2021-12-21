@@ -32,12 +32,12 @@ There are many guides for setting up Rails development environments on various p
 * [Backups](#backups)
 * [Applications](#apps)
 
-# Xcode [xcode]
+# Xcode {#xcode}
 
 Download and install [Xcode](http://developer.apple.com/technologies/xcode.html) if you haven't already. It provides useful tools like a C compiler. Pretty much nothing is going to work without one.
 
 
-# Homebrew [homebrew]
+# Homebrew {#homebrew}
 
 [Homebrew](http://mxcl.github.com/homebrew/) is an awesome package manager for Mac OS. It's superior to [MacPorts](http://www.macports.org/) in many ways. If you're setting up a new machine, there's no decision to be made. If you're already running MacPorts it's still seriously worth switching over.
 
@@ -55,9 +55,9 @@ git fetch --all
 ```
 
 
-# Sysadmin tweaks [admin]
+# Sysadmin tweaks {#admin}
 
-## GNU command-line utilities [gnu]
+## GNU command-line utilities {#gnu}
 
 Installing a few GNU utilities makes Mac OS's BSD userland feel more like home. You can skip this step if you're happy with the BSD variants and your apps don't need GNU flavour.
 
@@ -67,7 +67,7 @@ brew install coreutils gnu-sed gawk findutils --default-names
 
 Note: Installing these tools with `--default-names` will make the GNU variants the default and could possibly cause issues with any scripts that expect BSD versions. The GNU versions generally accept all the options as the BSD versions but there are a few differences. For example: BSD `sed` uses `-E` for extended mode and GNU `sed` uses `-r` and `--regexp-extended`. For compatibility with the BSD version of `sed` I use `/usr/bin/sed` in this guide.
 
-## dot files [dotfiles]
+## dot files {#dotfiles}
 
 I have customized my environment quite a bit and it can be frustrating to use a machine without my settings. As such, I like to install on every machine I use. Everything in this post should work on a bare config (and hopefully under your config as well). Here's what I run to setup my shell config:
 
@@ -76,7 +76,7 @@ curl -sL http://github.com/jasoncodes/dotfiles/raw/master/install.sh | bash
 exec bash -i # reload the shell
 ```
 
-## htop [htop]
+## htop {#htop}
 
 [`htop`](http://htop.sourceforge.net/) is a `top` alternative which makes interactive use much easier. It primarily targets Linux but the basic functions work fine on Mac OS. It's far nicer to use than the version of `top` which comes with Mac OS.
 
@@ -87,9 +87,9 @@ brew install htop
 You'll need to `sudo htop` when running htop in order to see all process information. I also like to enable the `Highlight program "basename"` setting.
 
 
-# Ruby 1.9.2 via system-wide RVM [ruby]
+# Ruby 1.9.2 via system-wide RVM {#ruby}
 
-## Install RVM [rvm]
+## Install RVM {#rvm}
 
 ``` bash
 sudo bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
@@ -99,7 +99,7 @@ source '/usr/local/rvm/scripts/rvm' # load RVM in current session
 
 We prepend the RVM loader to `/etc/bashrc` so it runs on non-interactive shells such as cron. This in combination with [`/bin/bash -l -c`](http://blog.scoutapp.com/articles/2010/09/07/rvm-and-cron-in-production) (which is automatically provided by the [whenever](https://github.com/javan/whenever) gem), we can have the RVM provided Ruby 1.9.2 available in cron jobs.
 
-## Install Ruby 1.9.2 and set it as default [rvm-ruby]
+## Install Ruby 1.9.2 and set it as default {#rvm-ruby}
 
 ``` bash
 sudo rvm pkg install readline
@@ -121,7 +121,7 @@ As a result, I have re-added `libyaml` to the Ruby installation instructions.
 If you're upgrading you'll need to update RVM with `rvm get head && rvm reload` first.
 To migrate a gemset over to the latest Ruby, run `rvm gemset copy 1.9.2-p{180,290}@example && rvm 1.9.2-p180 gemset delete example`.
 
-## Lockdown RVM installation [rvm-lockdown]
+## Lockdown RVM installation {#rvm-lockdown}
 
 By default RVM will give all users access to modify RVM rubies, gemsets, et al.
 This is problem as the RVM install is system wide and users should not be able to mess with the environment of others.
@@ -131,7 +131,7 @@ Luckily, all we need to do is empty out the `rvm` group which will leave `root` 
 sudo dscl . delete /Groups/rvm GroupMembership
 ```
 
-## Fix Homebrew permissions broken by installing RVM system-wide [rvm-homebrew-permissions]
+## Fix Homebrew permissions broken by installing RVM system-wide {#rvm-homebrew-permissions}
 
 After installing RVM system-wide you may find `/usr/local/lib` and `/usr/local/bin` to be locked down. We can liberate them again without reinstalling Homebrew by coping the owner and permissions from another directory (such as `/usr/local/share/man`) which is unaffected by the installation of RVM.
 
@@ -140,7 +140,7 @@ sudo chmod -R --reference=/usr/local/lib /usr/local/bin /usr/local/share/man
 sudo chown -R --reference=/usr/local/lib /usr/local/bin /usr/local/share/man
 ```
 
-## Install Bundler [bundler]
+## Install Bundler {#bundler}
 
 We'll be using Bundler's deployment mode via Capistrano to install and manage gems. This keeps our system gems clean and isolates apps from each other.
 
@@ -149,7 +149,7 @@ sudo gem install bundler
 ```
 
 
-# Apache & Passenger [apache]
+# Apache & Passenger {#apache}
 
 Apache 2 comes standard with Mac OS 10.6. Sprinkle [Phusion Passenger](http://www.modrails.com/) on top and we have an app server for Rack apps (including Rails).
 
@@ -203,7 +203,7 @@ $ curl -sI localhost | grep ^Server
 Server: Apache/2.2.15 (Unix) mod_ssl/2.2.15 OpenSSL/0.9.8l DAV/2 Phusion_Passenger/3.0.2
 ```
 
-## HTTP Compression [compression]
+## HTTP Compression {#compression}
 
 `mod_deflate` is loaded by default but it's not configured to compress any responses automatically. Save the following as `/etc/apache2/other/deflate.conf` to enable HTTP compression for HTML, CSS, Javascript and fonts:
 
@@ -211,7 +211,7 @@ Server: Apache/2.2.15 (Unix) mod_ssl/2.2.15 OpenSSL/0.9.8l DAV/2 Phusion_Passeng
 AddOutputFilterByType DEFLATE text/html text/plain text/xml font/ttf font/otf application/vnd.ms-fontobject text/css application/javascript application/atom+xml
 ```
 
-## Virtual Hosts [apache-vhosts]
+## Virtual Hosts {#apache-vhosts}
 
 It's useful to have a default virtual host to catch any hits that goto any undefined hostnames or direct IP requests.
 Here's a basic vhost which will act as the default. The key thing to note here is the zeros in the filename which causes it to sort before the other vhost files and Apache's `Include` to load it first.
@@ -293,7 +293,7 @@ To check the configuration syntax and then reload Apache so new vhosts are avail
 sudo apachectl configtest && sudo apachectl graceful
 ```
 
-## `apache2ctl` errors [apache2ctl]
+## `apache2ctl` errors {#apache2ctl}
 
 If `apachectl` outputs an error like `/usr/sbin/apachectl: line 82: ulimit: open files: cannot modify limit: Invalid argument`, you've ran into a Mac OS 10.6.6 regression. You can patch `apachectl` by running the following:
 
@@ -301,14 +301,14 @@ If `apachectl` outputs an error like `/usr/sbin/apachectl: line 82: ulimit: open
 sudo /usr/bin/sed -E -i bak 's/^(ULIMIT_MAX_FILES=".*)`ulimit -H -n`(")$/\11024\2/' /usr/sbin/apachectl
 ```
 
-## Passenger Preference Pane [passenger-preference-pane]
+## Passenger Preference Pane {#passenger-preference-pane}
 
 A quick note on [Passenger Preference Pane](http://www.fngtps.com/passenger-preference-pane): I don't recommend you install it.
 It can be handy in development environments with Passenger for quickly spinning up a new vhost for an app. It does not however allow you to customise vhost settings like logging nor setup a default vhost.
 
 It's a much better idea to create a template and then script the deployment of new applications in production environments. There's more to deploying an app than just creating a new vhost. We also need to create user accounts, databases, configure logging, etc.
 
-## Log rotation [apache-logs]
+## Log rotation {#apache-logs}
 
 Mac OS uses `newsyslog` to rotate the main log files such as `system.log` and `mail.log`. It does not however automatically rotate anything in `/var/log/apache2`.
 We could point `newsyslog` at each log file we want to rotate but `logrotate` lets us use wildcards.
@@ -393,7 +393,7 @@ sudo launchctl load -w /Library/LaunchDaemons/logrotate.plist
 ```
 
 
-# User accounts [users]
+# User accounts {#users}
 
 We want to isolate our services (PostgreSQL, Memcached, etc) and applications in their own user accounts.
 Unfortunately Mac OS doesn't provide a nice and simple `adduser` like command but we can make our own. Save the following as `/usr/local/bin/adduser` and run `chmod +x /usr/local/bin/adduser` to make it executable:
@@ -440,7 +440,7 @@ sudo rm -rf /Users/foo
 ```
 
 
-# Email [email]
+# Email {#email}
 
 Sometimes cron jobs fail. Wouldn't it be nice to hear about it? It's fairly easy to setup `postfix` to send mail via an external server. You could use [Gmail](http://mail.google.com/support/bin/answer.py?hl=en&answer=13287), [SendGrid](http://sendgrid.com/) or even your own mail server.
 
@@ -514,7 +514,7 @@ date | mail -s "Test from $(hostname -s)" $USER
 ```
 
 
-# PostgreSQL [postgresql]
+# PostgreSQL {#postgresql}
 
 ``` bash
 brew install postgresql
@@ -582,7 +582,7 @@ sudo launchctl load -w /Library/LaunchDaemons/org.postgresql.postgres.plist
 
 Finally type `psql` and you should drop straight into a PostgreSQL prompt.
 
-## Granting permissions [postgresql-permissions]
+## Granting permissions {#postgresql-permissions}
 
 Sometimes you may want to give full privileges on a database to a non-superuser account which is not the database owner.
 For example: you may want to share a database between two apps or let developers play around with data on a staging instance.
@@ -597,7 +597,7 @@ GRANT ALL ON ALL TABLES IN SCHEMA public TO $user;
 ```
 
 
-# Memcached [memcached]
+# Memcached {#memcached}
 
 ``` bash
 # install memcached
@@ -616,7 +616,7 @@ Memcached defaults to a maximum cache size of 64 MB. You can increase this if ne
 
 Running `echo stats | nc localhost 11211` should give you memcached stats.
 
-## Sharing the cache with multiple applications & security issues [memcached-security]
+## Sharing the cache with multiple applications & security issues {#memcached-security}
 
 If you're configuring multiple applications to use it, make sure you namespace your keys with something like:
 
@@ -627,7 +627,7 @@ config.cache_store = :mem_cache_store, { :namespace => Rails.application.config.
 If you have untrusted users/applications, you'll probably want to setup multiple instances with [SASL authentication](http://code.google.com/p/memcached/wiki/SASLHowto).
 
 
-# ImageMagick [imagemagick]
+# ImageMagick {#imagemagick}
 
 If your applications resize images with RMagick, you're going to need the ImageMagick libraries. Installing with `--disable-openmp` fixes some random crashing issues I was having.
 
@@ -636,11 +636,11 @@ brew install imagemagick --disable-openmp
 ```
 
 
-# Tomcat [tomcat]
+# Tomcat {#tomcat}
 
 To run [Solr](http://lucene.apache.org/solr/) one needs a servlet container. [Tomcat](http://tomcat.apache.org/) is a safe bet here. I recommend the excellent [Sunspot](http://outoftime.github.com/sunspot/) library for using Solr in Rails.
 
-## Installing [tomcat-installing]
+## Installing {#tomcat-installing}
 
 Install Tomcat via Homebrew and then unlink it. Tomcat comes with a number of scripts which have generic names (`startup.sh`, `version.sh`, etc). We don't want those in our `PATH`.
 
@@ -663,7 +663,7 @@ sudo find /usr/local/tomcat/conf -exec chown tomcat:staff {} \;
 sudo -u tomcat bash -c 'echo "org.apache.solr.level = WARNING" >> /usr/local/tomcat/conf/logging.properties'
 ```
 
-## Configure connectors [tomcat-connectors]
+## Configure connectors {#tomcat-connectors}
 
 I recommend editing `/usr/local/tomcat/conf/server.xml` and replacing all `<Connector />` entries with a single [HTTP connector](http://tomcat.apache.org/tomcat-7.0-doc/config/http.html) for `localhost:8080`:
 
@@ -671,7 +671,7 @@ I recommend editing `/usr/local/tomcat/conf/server.xml` and replacing all `<Conn
 <Connector address="127.0.0.1" port="8080" protocol="HTTP/1.1" connectionTimeout="20000" />
 ```
 
-## Run at startup [tomcat-startup]
+## Run at startup {#tomcat-startup}
 
 Save the following as `/Library/LaunchDaemons/org.apache.tomcat.plist` to have launchd start Tomcat automatically:
 
@@ -719,7 +719,7 @@ sudo launchctl load -w /Library/LaunchDaemons/org.apache.tomcat.plist
 To upgrade Tomcat to a newer version in the future, see my [Upgrading Tomcat with Homebrew](/posts/homebrew-tomcat-upgrade) post.
 
 
-# Git Hosting [git]
+# Git Hosting {#git}
 
 Run the following as your admin user on the server to install [gitolite](http://github.com/sitaramc/gitolite):
 
@@ -756,7 +756,7 @@ git clone git@$SERVER:gitolite-admin.git $SERVER-gitolite-admin
 The [documentation](http://sitaramc.github.com/gitolite/doc/) should contain everything you need. If you're new you'll want to read [gitolite.conf](http://sitaramc.github.com/gitolite/doc/gitolite.conf.html) for permission config and [migrate](http://sitaramc.github.com/gitolite/doc/migrate.html) if you're moving from Gitosis.
 
 
-# SSH on an alternate port [ssh-alt]
+# SSH on an alternate port {#ssh-alt}
 
 I want SSH to be available on both IPv4 and IPv6 on an alternate secondary port. I could use `ipfw add 01000 fwd 127.0.0.1,22 tcp from any to me 4242` for IPv4 but `ip6fw` doesn't support forwarding. We can however just have `launchd` listen for SSH connections on an alternate port by running the following:
 
@@ -780,7 +780,7 @@ Host server
 ```
 
 
-# Monit [monit]
+# Monit {#monit}
 
 [Monit](http://mmonit.com/monit/) is a great tool that lets you monitor processes and make sure they're still serving requests. `launchd` handles restarting of failed services for us automatically but processes could still hang. This is where `monit` comes into the picture.
 
@@ -872,7 +872,7 @@ If you `kill -STOP` or otherwise break a service and you should get an email let
 A great feature of Monit is that it can run tasks for you when something bad happens. In the case of Tomcat, I have created a script which kills Tomcat and then relaunches it. See my [Restarting Tomcat automatically on Mac OS with Monit](/posts/homebrew-tomcat-monit) post for details.
 
 
-# Backups [backups]
+# Backups {#backups}
 
 My current local backup solution consists of both Time Machine backups to a Time Capsule and a weekly startup disk image with [Carbon Copy Cloner](http://www.bombich.com/).
 A problem with both of these solutions though is that they can't quiesce database writes to allow atomic snapshots. Hopefully Apple's working on their own ZFS/brtfs alternative for Mac OS 10.7 Lion which will allow cheap copy-on-write snapshots.
@@ -990,9 +990,9 @@ done
 ```
 
 
-# Applications [apps]
+# Applications {#apps}
 
-## Automating application deployment with Capistrano [capistrano]
+## Automating application deployment with Capistrano {#capistrano}
 
 The [Capistrano Wiki](https://github.com/capistrano/capistrano/wiki) covers the basics on how to setup Capistrano. There are a few gotchas to watch out for however.
 
@@ -1043,7 +1043,7 @@ before "deploy:symlink", "deploy:migrate"
 after "deploy:update", "deploy:cleanup"
 ```
 
-## Setting up the application environment [app-user]
+## Setting up the application environment {#app-user}
 
 With your application configured to deploy via Capistrano, you can prepare the new application environment (user account, database, vhost) with the following script. Save a copy as `/usr/local/bin/createapp` and `chmod +x` it:
 
@@ -1078,7 +1078,7 @@ sudo cp /etc/logrotate.d/vhosts-example.conf.template /etc/logrotate.d/vhosts-${
 sudo /usr/bin/sed -i '' s/example/${APPNAME}/g /etc/logrotate.d/vhosts-${APPNAME}-production.conf
 ```
 
-## Deploying your application [deploying]
+## Deploying your application {#deploying}
 
 From within the app directory on your workstation you can then run the following:
 

@@ -17,19 +17,19 @@ Here we go. :)
 
 **Update 2014-01-02**: Added section on [Postfix `sendmail` compatibility](#postfix-sendmail-compat)
 
-# Installing Exim [installation]
+# Installing Exim {#installation}
 
-## Creating a service user account [user_account]
+## Creating a service user account {#user_account}
 
 It’s best to run Exim under a dedicated user account. You can create one though the Users & Groups preference pane, but that will leave you with an additional user account showing up in the user interface. Since you’ll never log into this account interactively, it’s better to create a new system account instead. Unfortunately, Mac OS X does not come with a simple command line tool to create user accounts and instead multiple calls to `dscl` are required. The good news is that I have wrapped this all up into a shell script which I’ve called [`adduser`](https://github.com/jasoncodes/dotfiles/blob/master/bin/adduser).
 
 You can install this utility in one of two ways: The first is to download the script file manually, place it somewhere in your path (e.g. `~/bin`) and then `chmod +x` it. The second, easier way is to use [`fresh`](https://github.com/freshshell/fresh). `fresh` is a tool for managing your dotfiles and it works great for utility scripts. With fresh installed, you can simply run `fresh https://github.com/jasoncodes/dotfiles/blob/master/bin/adduser` and `adduser` will be installed.
 
-## Homebrew [homebrew]
+## Homebrew {#homebrew}
 
 [Homebrew](http://brew.sh/) is a package manager for OS X. We could install Exim manually from source but Homebrew makes it so much easier. You probably want to install it now if you haven’t already.
 
-## Installing Exim [install]
+## Installing Exim {#install}
 
 Create a user account for Exim, brew the formula, and set file permissions for the dedicated user account:
 
@@ -44,21 +44,21 @@ sudo chown exim:admin /usr/local/var/spool/exim
 sudo chmod 750 /usr/local/var/spool/exim
 ```
 
-### 404 Not Found [404]
+### 404 Not Found {#404}
 
 Note: If you get a "Download failed" error when trying to `brew install` Exim, you can grab a copy of `exim-4.80.1.tar.gz` from somewhere else (to Google!) and drop it into `/Library/Caches/Homebrew`. Re-running `brew install` will then use this pre-cached copy. A great thing to note about Homebrew is that it will checksum the downloaded file to make sure it matches the original source file the formula creator used.
 
-## Configuring Exim [configuration]
+## Configuring Exim {#configuration}
 
 Open `/usr/local/etc/exim.conf` in your preferred text editor. Note that you’ll need to be able to write to this file as root. `sudo vim /usr/local/etc/exim.conf` is one way to do this but I prefer [`vim-eunuch`](https://github.com/tpope/vim-eunuch)’s `:SudoWrite`.
 
-### Local Hostname [hostname]
+### Local Hostname {#hostname}
 
 For machines which are always on a single network with their hostname configured in DNS, the output of `hostname` should be both predicable and stable. For mobile machines which roam between networks (e.g. laptops), you’ll probably have better reliability if you tell Exim which hostname you’d like to use when referring to your local machine.
 
 To set the hostname which Exim uses, search for `primary_hostname` in the configuration file, uncomment the line and set the value to the full hostname of your machine. e.g. `example.local`.
 
-### Block external access [interfaces]
+### Block external access {#interfaces}
 
 Exim by default denies relay attempts but it’s still good policy to not expose services when you don’t need to. To prevent Exim from listening on all network interfaces, add the following after the `primary_hostname` entry:
 
@@ -66,7 +66,7 @@ Exim by default denies relay attempts but it’s still good policy to not expose
 local_interfaces = 127.0.0.1
 ```
 
-### Postfix `sendmail` compatibility [postfix-sendmail-compat]
+### Postfix `sendmail` compatibility {#postfix-sendmail-compat}
 
 Exim and Postfix have different default behaviours for sendmail’s `-t` option which used by default by Rails’ (ActionMailer) sendmail delivery method. This option extracts email addresses from the message headers. When additional email addresses are supplied on the command line, Postfix adds these to the extracted set. Exim’s default is to remove any addresses specified on the command line from the extracted set. Rails expects Postfix’s behaviour. Add the following to the main configuration section (after `local_interfaces` is fine):
 
@@ -80,7 +80,7 @@ Exim also adds a `Sender` header when using `sendmail` with a custom `From` addr
 no_local_from_check
 ```
 
-### Routers [routers]
+### Routers {#routers}
 
 Search for `begin routers`. This section controls how mail is routed to its destination. We want to send all mail via a smarthost rather than using the default behaviour of delivering directly to destination mail servers via MX entries.
 
@@ -96,7 +96,7 @@ smart_route:
 
 Replace `smtp.example.net` with your upstream SMTP smarthost server’s hostname.
 
-### Transports [transports]
+### Transports {#transports}
 
 Search for `begin transports`. This section controls how mail is delivered once a destination is found by the router. Notice the "transport" setting in the router configuration. We want to force TLS (encryption) and use authentication (when required) for the target smarthost.
 
@@ -109,7 +109,7 @@ smarthost:
   hosts_require_auth = ${lookup{$host}nwildlsearch{/usr/local/etc/exim/passwd.client}{*}}
 ```
 
-### Authentication [authenticators]
+### Authentication {#authenticators}
 
 Search for `begin authenticators`. This section controls where authentication credentials are retrieved from for both inbound (server) and outbound (client) connections. We're only authenticating as a client here so here's an entry to add which retrieves the username and password from our configuration file:
 
@@ -136,11 +136,11 @@ Add a line like the following to `/usr/local/etc/exim/passwd.client`, replacing 
 smtp.example.net:username:password
 ```
 
-### Forwarding local user accounts [forward]
+### Forwarding local user accounts {#forward}
 
 Create `.forward` files in the home directory of any local accounts you want to receive mail for. The file should contain a single line with the destination email address.
 
-### Enabling IPv6 support [ipv6]
+### Enabling IPv6 support {#ipv6}
 
 Exim’s IPv6 support is not enabled out of the box. If you’re interested in this, it’s fairly easy to get going.
 
@@ -150,11 +150,11 @@ Secondly, we’ll add the IPv6 loopback address to the allowed list for relaying
 
 Finally, we’ll add the IPv6 loopback interface to the list of interfaces to listen to. Search for `local_interfaces` and change the value to `<; 127.0.0.1 ; ::1`.
 
-### Syntax check config file [check]
+### Syntax check config file {#check}
 
 Run `sudo exim -bV` to check the syntax of the config file. Any major errors will be detected by this command. If all is good, you should see `Configuration file is /usr/local/etc/exim.conf` as the last line of output.
 
-## Running Exim on port 25 [port25]
+## Running Exim on port 25 {#port25}
 
 If you have any other SMTP server running, you should disable it now. If you followed my previous [Postfix on OS X guide](), you can do this by running `sudo launchctl unload -w /Library/LaunchDaemons/org.postfix.master.plist`.
 
@@ -187,7 +187,7 @@ Start the server now by running `sudo launchctl load -w /Library/LaunchDaemons/e
 
 Run `nc -n 127.0.0.1 25 < /dev/null` and you should see a 220 banner message confirming the server is now running.
 
-## Replace Postfix `sendmail` with Exim [sendmail]
+## Replace Postfix `sendmail` with Exim {#sendmail}
 
 UNIX services such as `cron` use sendmail rather than using SMTP to deliver mail. In order for these to work, we’ll need to swap out Postfix’s sendmail binary (`/usr/sbin/sendmail`) for Exim.
 
@@ -198,7 +198,7 @@ sudo chown root:wheel /usr/sbin/sendmail
 sudo chmod u+s /usr/sbin/sendmail
 ```
 
-## Log rotation [logrotate]
+## Log rotation {#logrotate}
 
 The main log file for Exim is stored at `/usr/local/var/spool/exim/log/mainlog`. You can view this file if you wish to see detail on what Exim is doing.
 
@@ -234,7 +234,7 @@ Exim comes with a tool to perform log rotation. Let’s setup a launchd schedule
 
 Register the log rotation job with launchctl by running `sudo launchctl load -w /Library/LaunchDaemons/exim-logrotate.plist`.
 
-# Testing [testing]
+# Testing {#testing}
 
 You can test sendmail is working by sending a test message using `mail`. Assuming you setup a `.forward` file earlier for your user account, the following should send you an email:
 
