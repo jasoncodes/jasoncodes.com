@@ -22,6 +22,8 @@ DirectorySlash Off
 {% for post in site.posts %}{% if post.short %}redirect 301 /{{ post.short }} {{ site.url }}{{ post.id }}
 {% endif %}{% endfor %}
 
+RedirectMatch 302 ^/posts$ /
+
 # our post receive hook's URL is /_deploy
 # this week we're using PHP to handle it (fake MultiViews)
 RewriteRule _deploy$ %{REQUEST_URI}.php
