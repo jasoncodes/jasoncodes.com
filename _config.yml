@@ -1,12 +1,21 @@
 encoding: utf-8
-markdown: redcarpet
-pygments: true
+markdown: kramdown
 permalink: /posts/:title
 port: 4000
 
 exclude:
   - Rakefile
   - bin
+
+kramdown:
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  auto_ids: false
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    span:
+      disable: true
+    block:
+      wrap: false
 
 assets:
   js_compressor: uglifier
