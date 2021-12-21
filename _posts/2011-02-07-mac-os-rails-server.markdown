@@ -773,7 +773,7 @@ sudo launchctl load -w /Library/LaunchDaemons/ssh-alt.plist
 
 Now with this port opened on my firewall I can use the following in my `~/.ssh/config` to easily connect to my server with `ssh server`:
 
-``` apache
+``` ssh
 Host server
   HostName server.example.com
   Port 4242
