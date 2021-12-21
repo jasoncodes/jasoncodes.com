@@ -13,7 +13,7 @@
 	{% for post in site.posts %}
 	<url>
 		<loc>{{ site.url }}{{ post.url }}</loc>
-		<lastmod>{{ post.last_modified | date_to_xmlschema }}</lastmod>
+		<lastmod>{{ post.updated | default: post.date | date_to_xmlschema }}</lastmod>
 		<changefreq>monthly</changefreq>
 		<priority>0.5</priority>
 	</url>
