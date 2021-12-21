@@ -61,11 +61,16 @@ GEM
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.3.6)
     mini_magick (4.11.0)
+    mini_portile2 (2.6.1)
     minitest (4.7.5)
     multi_json (1.15.0)
+    nokogiri (1.12.5)
+      mini_portile2 (~> 2.6.1)
+      racc (~> 1.4)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (4.0.6)
+    racc (1.6.0)
     rack (1.6.13)
     rake (13.0.6)
     rb-fsevent (0.11.0)
@@ -107,6 +112,7 @@ DEPENDENCIES
   activesupport (~> 4.0)
   jekyll
   jekyll-assets
+  nokogiri
   rake
   sass
   uglifier

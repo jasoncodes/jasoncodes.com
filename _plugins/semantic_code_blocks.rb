@@ -1,37 +1,45 @@
-require 'pygments'
-require 'rack/utils'
-require 'active_support/core_ext/hash/indifferent_access'
+require 'rouge'
+require 'nokogiri'
 
-module Jekyll::Converters::Markdown::RedcarpetParser::WithPygments
-  remove_method :block_code
-  def block_code(code, lang)
-    options = Rack::Utils.parse_query(lang.to_s.split('#', 2)[1]).with_indifferent_access
-    lang = lang && lang.split('#').first || "text"
+module KramdownConverterHtmlPatch
+  def convert_codeblock(el, indent)
+    if lang_tokens = el.options[:lang]&.split('#', 2)
+      el.options[:lang] = lang_tokens[0]
+      el.options.merge! Rack::Utils.parse_query(lang_tokens[1]).transform_keys(&:to_sym)
+    end
 
-    options.merge! encoding: 'utf-8', nowrap: true
-    options[:hl_lines] = options[:hl_lines].to_s.split(',').map { |part|
+    classNames = %w[source]
+    if lang = el.options[:lang]
+      classNames << "source-#{lang}"
+    end
+    el.attr[:class] = classNames.join(' ')
+
+    doc = Nokogiri::HTML.fragment(super)
+
+    node = doc.at('div.source')
+    unless node
+      raise "Error converting code block: #{el.inspect}"
+    end
+
+    node.name = 'pre'
+
+    highlight_lines = el.options[:hl_lines].to_s.split(',').flat_map do |part|
       if part =~ /\A(\d+)-(\d+)\z/
-        ($1.to_i..$2.to_i).to_a
+        (Integer($1)..Integer($2)).to_a
       else
-        part
+        Integer(part)
       end
-    }.flatten
+    end
 
-    html = Pygments.highlight(code, lexer: lang, options: options)
+    lines = node.inner_html.split("\n")
+    lines = lines.map.with_index do |line, index|
+      highlight = highlight_lines.include?(index + 1)
+      "<code#{' class="hll"' if highlight}>#{line}</code>"
+    end
+    node.inner_html = lines.join("\n")
 
-    # move whole of <span class="hll"/> onto single line
-    html.gsub! %r[(<span class="hll">)([^\n]*)(\n)(</span>)], '\1\2\4\3'
-
-    # wrap each line in <code/> so we can style them easier
-    html.gsub!(/^.*$/, '<code>\0</code>')
-
-    # insert newline into empty <code/> lines to ensure blank lines copy into clipboard
-    html.gsub!(%r[^(<code>)(</code>)$], "\\1\n\\2")
-
-    # convert <span class="hll"/> into <strong/> and add styling hook to <code/>
-    html.gsub! %r[^<code><span class="hll">(.*)</span></code>$], '<code class="hll"><strong>\1</strong></code>'
-
-    # wrap the result in a <pre/> with our desired CSS classes
-    "<pre class=\"source source-#{lang}\">#{html}</pre>"
+    doc.to_html
   end
 end
+
+Kramdown::Converter::Html.prepend KramdownConverterHtmlPatch
