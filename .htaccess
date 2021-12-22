@@ -22,6 +22,8 @@ DirectorySlash Off
 {% for post in site.posts %}{% if post.short %}redirect 301 /{{ post.short }} {{ site.url }}{{ post.id }}
 {% endif %}{% endfor %}
 
+RedirectMatch 302 ^/posts$ /
+
 # our post receive hook's URL is /_deploy
 # this week we're using PHP to handle it (fake MultiViews)
 RewriteRule _deploy$ %{REQUEST_URI}.php
@@ -31,25 +33,13 @@ RewriteCond %{ENV:REDIRECT_DONE} ^$
 RewriteCond %{REQUEST_URI} (.*)/index(?:\.html?)?$
 RewriteRule .* %1/ [R=301,L]
 
-# redirect away .html from URLs
+# redirect away .html and slashes from URLs
 RewriteCond %{ENV:REDIRECT_DONE} ^$
-RewriteCond %{REQUEST_URI} (.*).html$
+RewriteCond %{REQUEST_URI} (.+)(.html|/)$
 RewriteRule .* %1 [R=301]
-
-# redirect /foo/bar/ to /foo/bar (for /foo/bar/index.html)
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteCond %{REQUEST_FILENAME} (.*)
-RewriteCond %1/index.html -f
-RewriteCond %{REQUEST_URI} (.+)/$
-RewriteRule .* %1 [R=301]
-
-# interpret /foo/bar as /foo/bar/index.html
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME}/index.html -f
-RewriteCond %{REQUEST_URI} !/$
-RewriteRule .* %{REQUEST_URI}/index.html [E=DONE:1]
 
 # interpret /foo/bar as /foo/bar.html
+RewriteCond %{ENV:REDIRECT_DONE} ^$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME}.html -f
 RewriteRule .* %{REQUEST_URI}.html [E=DONE:1]

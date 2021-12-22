@@ -1,5 +1,4 @@
 ---
-layout: nil
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
@@ -21,7 +20,7 @@ layout: nil
 			<title type="html">{{ post.title | xml_escape }}</title>
 			<link href="{{ site.url }}{{ post.url }}" rel="alternate" type="text/html" />
 			<published>{{ post.date | date_to_xmlschema }}</published>
-			<updated>{{ post.last_modified | date_to_xmlschema }}</updated>
+			<updated>{{ post.updated | default: post.date | date_to_xmlschema }}</updated>
 			<id>{{ site.url }}{{ post.id }}</id>
 			<content type="html" xml:base="{{ site.url }}{{ post.id }}">{{ post.content | xml_escape }}</content>
 		</entry>

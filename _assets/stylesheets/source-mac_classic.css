@@ -7,7 +7,6 @@ Tested to give reasonable output for: Ruby, HTML, CSS, Javascript, Haml, Sass, X
 
 pre.source .hll { background-color: #ffffcc; }
 pre.source  { background: white; color: black; }
-pre.source-apache { color: #C5060B; }
 pre.source .c { color: #06F; font-style: italic; } /* Comment */
 pre.source .err { border: 1px solid #FF0000; } /* Error */
 pre.source .k { color: blue; } /* Keyword */

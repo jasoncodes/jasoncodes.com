@@ -8,12 +8,12 @@ site_index: true
 <section class="posts">
   {% for post in site.posts %}
     <article>
-      <time pubdate>{{ post.date | date: "%Y-%m-%d") }}</time>
+      <time pubdate>{{ post.date | date: "%Y-%m-%d" }}</time>
       &raquo;
       <a href="{{ post.url }}">{{ post.title }}</a>
       {% if post.updated %}
         <span class="updated">
-          (updated <time>{{ post.updated | date: "%Y-%m-%d") }}</time>)
+          (updated <time>{{ post.updated | date: "%Y-%m-%d" }}</time>)
         </span>
       {% endif %}
     </article>

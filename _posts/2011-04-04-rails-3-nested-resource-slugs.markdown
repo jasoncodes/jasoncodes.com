@@ -22,7 +22,7 @@ Note: This post is for Rails 3. For Rails 2.3, you can use [`default_routing`](h
 
 # Project setup
 
-## Generate new Rails app [rails-new]
+## Generate new Rails app {#rails-new}
 
 Create a new directory and setup our RVM gemset:
 
@@ -52,7 +52,7 @@ end
 
 Run `bundle` to ensure all the required gems are installed.
 
-## Create models [models]
+## Create models {#models}
 
 Generate our model files and migrations. We'll be nesting projects underneath accounts and each model will have their own name.
 
@@ -71,7 +71,7 @@ end
 
 And then run the migrations with `rake db:migrate`.
 
-## Controllers and initial routes [controllers]
+## Controllers and initial routes {#controllers}
 
 Now that our test models are ready, let's add an initial set of routes to `config/routes.rb`:
 
@@ -98,7 +98,7 @@ end
 
 We now have URLs of the classic `https://example.com/accounts/3141/projects/59265` format. At this point I have also created specs for the routes which I have omitted here for brevity. You can find these in the [controllers commit](https://github.com/jasoncodes/rails-3-nested-resource-slugs/commit/274a8f34c702afce8e22dcb532eb2c805da4df21) in the [example app repo](https://github.com/jasoncodes/rails-3-nested-resource-slugs).
 
-# Replacing numeric IDs in URLs with slugs [friendly_id]
+# Replacing numeric IDs in URLs with slugs {#friendly_id}
 
 Revealing our surrogate primary keys in user visible URLs is not overly pretty. Usually there is a name field or other suitable text identifier which we could use. Name fields are rarely suitable for use directly in a URL as they typically contain unsafe characters and are often not unique nor immutable. Luckily for us, there's [FriendlyId](https://github.com/norman/friendly_id) which normalises our name fields and ensures they are unique by adding a sequence number if required. With FriendlyId, we can easily turn URLs from `https://example.com/accounts/3141/projects/59265` into `https://example.com/accounts/foocorp/projects/widgets`.
 
@@ -172,11 +172,11 @@ rake friendly_id:make_slugs MODEL=Account
 rake friendly_id:make_slugs MODEL=Project
 ```
 
-# Removing the controller names from URLs [controller-names]
+# Removing the controller names from URLs {#controller-names}
 
 Now that we have URLs like `https://example.com/accounts/foocorp/projects/widgets`, we need to remove the the controller name segments from the path so we end up with URLs like `https://example.com/foocorp/widgets`.
 
-## Updating the specs [specs]
+## Updating the specs {#specs}
 
 First things first, let's update the routing specs to match the URLs we are after. i.e. `/foocorp/widgets` instead of `/accounts/foocorp/projects/widgets`.
 
@@ -270,7 +270,7 @@ describe ProjectsController do
 end
 ```
 
-## Updating the routes [routes]
+## Updating the routes {#routes}
 
 We can customise the controller names in routes by using the `:path` option on the `resources` block. By setting the path to an empty string, we can remove the controller name segment completely from the generated paths.
 
@@ -286,7 +286,7 @@ Example::Application.routes.draw do
 end
 ```
 
-## A small problem [problem]
+## A small problem {#problem}
 
 Unfortunately this does not work quite to plan. If you run the specs, you'll see the member actions on the parent resource are not working. Viewing the output of `rake routes` confirms why:
 
@@ -297,7 +297,7 @@ account_project GET    /:account_id/:id(.:format)      {:action=>"show", :contro
 
 The nested show route is outputted first and catches all member actions on the parent. If you take a look the implementation of `resources` in  [`action_dispatch/routing/mapper.rb`](https://github.com/rails/rails/blob/v3.0.5/actionpack/lib/action_dispatch/routing/mapper.rb#L1003), you'll see that the child block is `yield`ed before any of the resources own routes are outputted.
 
-## An easy solution [solution]
+## An easy solution {#solution}
 
 The workaround for this is to place any nested `resources` which have empty paths (`:path => ''`) within a second parent `resources` block. This second block uses `:only => []` to prevent it from generating any routes of its own. Any `member` or `collection` blocks for `resources :accounts` (as well as any `only`/`except` constraints) can be added as normal to the first `resources :accounts` entry.
 

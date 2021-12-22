@@ -1,8 +1,7 @@
 source 'https://rubygems.org/'
 
 gem 'rake'
-gem 'activesupport', '~> 4.0'
 gem 'jekyll'
-gem 'jekyll-assets'
+gem 'jekyll-assets', github: 'envygeeks/jekyll-assets'
+gem 'nokogiri'
 gem 'uglifier'
-gem 'sass'
