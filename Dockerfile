@@ -1,5 +1,5 @@
-FROM ruby:2.1 AS ruby
-FROM node:14 AS node
+FROM ruby:2.7.5 AS ruby
+FROM node:14.16.0 AS node
 
 FROM ruby AS build
 COPY --from=node /usr/local /usr/local
@@ -8,6 +8,7 @@ COPY --from=node /opt /opt
 WORKDIR /app
 
 COPY Gemfile* ./
+RUN gem install bundler:$(tail -n1 Gemfile.lock | awk '{print $1}')
 RUN bundle config --global frozen 1 && bundle install
 
 COPY . /app
