@@ -42,12 +42,6 @@ links:
     suffix: toots
     me: true
 
-  - key: twitter
-    url: https://twitter.com/jasoncodes
-    name: Twitter
-    suffix: tweets
-    me: true
-
   - key: github
     url: https://github.com/jasoncodes
     name: GitHub
