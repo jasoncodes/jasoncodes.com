@@ -26,7 +26,9 @@ else
 	(
 		set -e
 		cd build.tmp
-		bundle install --deployment --path ../vendor/cache
+		bundle config set --local path ../vendor/cache
+		bundle config set --local deployment true
+		bundle install
 		bundle exec rake build
 	) || exit 1
 	[ -e public_html.new ] && rm -rf public_html.new
