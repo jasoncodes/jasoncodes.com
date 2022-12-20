@@ -25,8 +25,8 @@ assets:
 
 title: Jason Codes
 subtitle: "code &amp; rants of Jason Weathered"
-url: http://jasoncodes.com
-feed_url: http://jasoncodes.com/feed
+url: https://jasoncodes.com
+feed_url: https://jasoncodes.com/feed
 
 author:
   name: Jason Weathered
@@ -47,7 +47,7 @@ links:
     me: true
 
   - key: stackoverflow
-    url: http://stackoverflow.com/users/3736/jason-weathered
+    url: https://stackoverflow.com/users/3736/jason-weathered
     name: Stack Overflow
     suffix: questions &amp; answers
     me: true

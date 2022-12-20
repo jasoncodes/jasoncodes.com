@@ -4,11 +4,11 @@ RewriteEngine On
 
 # no-www
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
-RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
 # redirect my name domain to my vanity domain
 RewriteCond %{HTTP_HOST} ^jasonweathered\.com$ [NC]
-RewriteRule ^(.*)$ http://jasoncodes.com/$1 [R=301,L]
+RewriteRule ^(.*)$ https://jasoncodes.com/$1 [R=301,L]
 
 # redirect /feed to atom.xml
 RewriteRule ^feed$ /atom.xml
