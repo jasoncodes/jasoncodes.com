@@ -24,10 +24,6 @@ DirectorySlash Off
 
 RedirectMatch 302 ^/posts$ /
 
-# our post receive hook's URL is /_deploy
-# this week we're using PHP to handle it (fake MultiViews)
-RewriteRule _deploy$ %{REQUEST_URI}.php
-
 # redirect away /index.html from URLs
 RewriteCond %{ENV:REDIRECT_DONE} ^$
 RewriteCond %{REQUEST_URI} (.*)/index(?:\.html?)?$

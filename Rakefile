@@ -3,7 +3,7 @@ def jekyll(opts = "")
   sh "mkdir -p _site"
   sh "bundle exec jekyll " + opts
   sh "cd _site && ln -s assets/favicon-*.ico favicon.ico"
-  sh "cp -a _deploy.php _deploy.sh _site/"
+  sh "cp -a _deploy.sh _site/"
 end
 
 task :default => :server
