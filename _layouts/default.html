@@ -7,9 +7,9 @@
 		{% if site.feed_url %}<link href="{{ site.feed_url }}" rel="alternate" title="{{ site.title }}" type="application/atom+xml" />{% endif %}{% if page.short %}
 		<link rel="shorturl" href="{{ site.url }}/{{ page.short }}" />{% endif %}{% if page.slug %}
 		<link rel="canonical" href="{{ site.url }}/posts/{{ page.slug }}" />{% endif %}
-		<link rel="shortcut icon" href="{{ assets["favicon.ico"].digest_path }}" type="image/vnd.microsoft.icon" />
-		<link rel="icon" href="{{ assets["favicon.png"].digest_path }}" type="image/png" />
-		<link rel="apple-touch-icon" href="{{ assets["apple-touch-icon.png"].digest_path }}" type="image/png" />
+		<link rel="shortcut icon" href="{% asset favicon.ico @path %}" type="image/vnd.microsoft.icon" />
+		<link rel="icon" href="{% asset favicon.png @path %}" type="image/png" />
+		<link rel="apple-touch-icon" href="{% asset apple-touch-icon.png @path %}" type="image/png" />
 		{% asset screen.css %}
 		{% asset source-mac_classic.css %}
 		{% asset main.js %}
