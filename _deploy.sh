@@ -20,20 +20,14 @@ then
 		mail -s "jasoncodes.com deploy error" "`whoami`" < "$LOG_FILE"
 	fi
 else
+	docker build -t jasoncodes.com .
 	cd ..
 	[ -e build.tmp ] && rm -rf build.tmp
-	rsync --archive repo/ build.tmp
-	(
-		set -e
-		cd build.tmp
-		bundle config set --local path ../vendor/cache
-		bundle config set --local deployment true
-		bundle install
-		bundle exec rake build
-	) || exit 1
+	mkdir build.tmp
+	docker run --rm jasoncodes.com tar -cf - -C htdocs . | tar -x -C build.tmp
 	[ -e public_html.new ] && rm -rf public_html.new
 	[ ! -e public_html ] || rsync --archive public_html/ public_html.new
-	rsync -rlpgoDO --checksum --delete build.tmp/_site/ public_html.new/
+	rsync -rlpgoDO --checksum --delete build.tmp/ public_html.new/
 	rm -rf build.tmp
 	[ -e public_html.old ] && rm -rf public_html.old
 	[ ! -e public_html ] || mv public_html{,.old}
