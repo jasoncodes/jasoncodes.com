@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/francois2metz/jekyll-assets.git
-  revision: 9e321f90784dd1fe52b3c2a823653eb5cd4906de
+  remote: https://github.com/jasoncodes/jekyll-assets.git
+  revision: 94010e182276c20cf514d8b064a8550ea9ff2a5e
   specs:
     jekyll-assets (4.0.0.alpha)
-      activesupport (>= 5, < 7)
+      activesupport (>= 5, < 9)
       execjs (~> 2.7)
       extras (~> 0.2)
       fastimage (~> 2.0, >= 1.8)
@@ -18,18 +18,26 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (6.1.7.10)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
+    activesupport (8.1.3)
+      base64
+      bigdecimal
+      concurrent-ruby (~> 1.0, >= 1.3.1)
+      connection_pool (>= 2.2.5)
+      drb
       i18n (>= 1.6, < 2)
+      json
+      logger (>= 1.4.2)
       minitest (>= 5.1)
-      tzinfo (~> 2.0)
-      zeitwerk (~> 2.3)
+      securerandom (>= 0.3)
+      tzinfo (~> 2.0, >= 2.0.5)
+      uri (>= 0.13.1)
     addressable (2.8.9)
       public_suffix (>= 2.0.2, < 8.0)
     base64 (0.3.0)
     bigdecimal (4.1.0)
     colorator (1.1.0)
     concurrent-ruby (1.3.6)
+    connection_pool (3.0.2)
     csv (3.3.5)
     drb (2.2.3)
     em-websocket (0.5.3)
@@ -128,6 +136,7 @@ GEM
       google-protobuf (~> 4.31)
     sassc (2.4.0)
       ffi (~> 1.9)
+    securerandom (0.4.1)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
       logger
@@ -139,8 +148,8 @@ GEM
     uglifier (4.2.1)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (2.6.0)
+    uri (1.1.1)
     webrick (1.9.2)
-    zeitwerk (2.7.5)
 
 PLATFORMS
   aarch64-linux

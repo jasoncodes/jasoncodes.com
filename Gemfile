@@ -7,6 +7,6 @@ gem 'ostruct'
 
 gem 'rake'
 gem 'jekyll'
-gem 'jekyll-assets', github: 'francois2metz/jekyll-assets'
+gem 'jekyll-assets', github: 'jasoncodes/jekyll-assets'
 gem 'nokogiri'
 gem 'uglifier'
