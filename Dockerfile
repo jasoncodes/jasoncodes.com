@@ -8,8 +8,19 @@ COPY --from=node /opt /opt
 WORKDIR /app
 
 COPY Gemfile* ./
-RUN gem install bundler:$(tail -n1 Gemfile.lock | awk '{print $1}')
-RUN bundle config set --global frozen 1 && bundle install
+
+RUN \
+  --mount=type=cache,id=bundle-cache,target=/var/cache/bundle \
+  <<SH
+  set -euo pipefail
+  export GEM_HOME="/var/cache/bundle/debian-$(cat /etc/debian_version)-ruby-$RUBY_VERSION"
+  export BUNDLE_FROZEN=true
+  gem install --conservative "bundler:$(tail -n1 Gemfile.lock | awk '{print $1}')"
+  bundle install --no-clean
+  echo "Copying bundle cache to target..."
+  tar c -C "$GEM_HOME" --anchored --no-wildcards-match-slash --exclude=./cache . | tar x -C /usr/local/bundle
+  bundle clean --force
+SH
 
 COPY . /app
 RUN bundle exec rake build
